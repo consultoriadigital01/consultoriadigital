@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#2F87C8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>BYD Parvi · Painel Comercial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== TOKENS ===== */
+:root{
+  --bg:#eef3f9;--surface:#fff;--surface2:#f5f8fc;--surface3:#e9f0f8;
+  --border:#dfe8f3;--border2:#cbd9ea;
+  --text:#0b2237;--text2:#4a6280;--text3:#8fa3bb;
+  --accent:#2F87C8;--accent-bg:#eaf4fd;--accent-text:#1f6ba3;--accent-soft:#4E9FD6;
+  --green:#15803d;--green-bg:#effaf3;
+  --red:#c92a3d;--red-bg:#fef1f2;
+  --amber:#b45309;--amber-bg:#fff6e8;
+  --purple:#6d28d9;--purple-bg:#f5f3ff;
+  --radius:9px;--radius-lg:15px;
+  --shadow:0 1px 3px rgba(11,34,55,.07),0 1px 2px rgba(11,34,55,.04);
+  --shadow-md:0 8px 26px rgba(11,34,55,.11),0 2px 6px rgba(11,34,55,.05);
+}
+html.dark{
+  --bg:#0e1219;--surface:#171c26;--surface2:#1d2431;--surface3:#242c3b;
+  --border:#2a3344;--border2:#374255;
+  --text:#e7ecf3;--text2:#8d9cb2;--text3:#5d6c84;
+  --accent:#4E9FD6;--accent-bg:rgba(78,159,214,.14);--accent-text:#7dbde9;--accent-soft:#4E9FD6;
+  --green:#34b374;--green-bg:rgba(52,179,116,.13);
+  --red:#e2606f;--red-bg:rgba(226,96,111,.13);
+  --amber:#dc9b3f;--amber-bg:rgba(220,155,63,.13);
+  --purple:#9b7fe8;--purple-bg:rgba(155,127,232,.13);
+  --shadow:0 1px 4px rgba(0,0,0,.4);--shadow-md:0 8px 28px rgba(0,0,0,.5);
+}
+html.noir{
+  --bg:#000;--surface:#0a0a0c;--surface2:#101116;--surface3:#17191f;
+  --border:#1e2029;--border2:#2b2e3a;
+}
+html.vidro{--glass:1}
+html.vidro body{
+  background:
+    radial-gradient(1100px 620px at 12% -8%, rgba(78,159,214,.28), transparent 60%),
+    radial-gradient(900px 560px at 92% 8%, rgba(47,135,200,.20), transparent 62%),
+    var(--bg);
+  background-attachment:fixed;
+}
+html.vidro .sidebar,html.vidro .topbar,html.vidro .card,html.vidro .modal{
+  background:color-mix(in srgb,var(--surface) 62%,transparent);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+  backdrop-filter:saturate(180%) blur(18px);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;font-size:13.5px;line-height:1.5;
+  -webkit-font-smoothing:antialiased}
+input,select,textarea,button{font-family:inherit;font-size:16px}
+@media(min-width:900px){input,select,textarea,button{font-size:13.5px}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== LOADING ===== */
+#boot{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.spinner{width:30px;height:30px;border:2.5px solid var(--border2);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== LAYOUT ===== */
+.layout{display:flex;min-height:100vh}
+.sidebar{width:228px;min-width:228px;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:60;
+  padding:0 0 1rem;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sidebar-logo{padding:1.1rem 1rem;border-bottom:1px solid var(--border);margin-bottom:.4rem}
+.logo-lockup{display:flex;align-items:center;gap:9px}
+.logo-byd{height:15px;display:block}
+.logo-byd path,.logo-byd rect{fill:var(--accent)}
+.logo-div{width:1px;height:17px;background:var(--border2)}
+.logo-parvi{font-size:16px;font-weight:800;font-style:italic;color:var(--accent);letter-spacing:-.01em}
+.logo-sub{font-size:10.5px;color:var(--text3);margin-top:4px;font-weight:500}
+.sidebar-section{padding:.3rem .6rem}
+.sidebar-section-label{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.06em;
+  padding:.55rem .5rem .25rem}
+.nav-item{display:flex;align-items:center;gap:9px;padding:.55rem .65rem;border-radius:var(--radius);
+  cursor:pointer;font-size:13px;color:var(--text2);border:none;background:none;width:100%;
+  text-align:left;font-weight:500;transition:background .12s,color .12s;min-height:40px}
+.nav-item:hover{background:var(--surface3);color:var(--text)}
+.nav-item.active{background:var(--accent-bg);color:var(--accent-text);font-weight:600}
+.nav-badge{margin-left:auto;background:var(--surface3);color:var(--text2);font-size:10.5px;
+  font-weight:700;padding:1px 7px;border-radius:999px;min-width:20px;text-align:center}
+.nav-badge.hot{background:var(--red-bg);color:var(--red)}
+.sidebar-footer{margin-top:auto;padding:.8rem 1rem 0;border-top:1px solid var(--border);
+  font-size:11px;color:var(--text3)}
+.main{flex:1;margin-left:228px;display:flex;flex-direction:column;min-width:0}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;
+  min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  position:sticky;top:0;z-index:40}
+.topbar h1{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.topbar-right{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.content{padding:1.25rem 1.5rem 3rem;flex:1}
+.menu-btn{display:none;background:none;border:1px solid var(--border);border-radius:8px;
+  width:38px;height:38px;font-size:17px;color:var(--text2);cursor:pointer}
+.scrim{display:none;position:fixed;inset:0;background:rgba(6,18,30,.5);z-index:55}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:transform .2s ease;
+    padding-bottom:calc(1rem + env(safe-area-inset-bottom,0px))}
+  .sidebar.open{transform:none}
+  .scrim.on{display:block}
+  .main{margin-left:0}
+  .menu-btn{display:flex;align-items:center;justify-content:center}
+  .topbar{padding:0 .85rem;padding-top:env(safe-area-inset-top,0px)}
+  .content{padding:1rem .85rem 4rem}
+  .topbar h1{font-size:14px}
+}
+
+/* ===== BOTOES ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:.5rem .85rem;
+  min-height:38px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface);
+  color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:.13s;white-space:nowrap}
+.btn:hover{background:var(--surface3)}
+.btn-dark{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-dark:hover{background:var(--accent-text);border-color:var(--accent-text)}
+.btn-ghost{border-color:transparent;background:transparent;color:var(--text2)}
+.btn-sm{padding:.3rem .6rem;min-height:31px;font-size:12px}
+.btn-wa{background:var(--green);border-color:var(--green);color:#fff;text-decoration:none}
+.btn-danger{color:var(--red);border-color:var(--red)}
+.btn-icon{width:34px;height:34px;padding:0;border-radius:8px;display:inline-flex;
+  align-items:center;justify-content:center;border:1px solid var(--border2);
+  background:var(--surface);cursor:pointer;font-size:14px;color:var(--text2);text-decoration:none}
+.btn-icon:hover{background:var(--surface3)}
+
+/* ===== CARDS ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);padding:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(286px,1fr));gap:12px}
+.grid-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;margin-bottom:1.1rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:.85rem .95rem;box-shadow:var(--shadow)}
+.kpi .v{font-size:25px;font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.kpi .l{font-size:11.5px;color:var(--text2);margin-top:3px;font-weight:500}
+.kpi.hot .v{color:var(--red)}
+.kpi.ok .v{color:var(--green)}
+.kpi.ac .v{color:var(--accent)}
+
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:999px;background:var(--surface3);color:var(--text2)}
+.b-ac{background:var(--accent-bg);color:var(--accent-text)}
+.b-ok{background:var(--green-bg);color:var(--green)}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-am{background:var(--amber-bg);color:var(--amber)}
+.b-pu{background:var(--purple-bg);color:var(--purple)}
+
+/* ===== FORM ===== */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg-full{grid-column:1/-1}
+@media(max-width:620px){.form-grid{grid-template-columns:1fr}.fg-full{grid-column:auto}}
+.form-group{display:flex;flex-direction:column;gap:5px;min-width:0}
+.form-label{font-size:11.5px;font-weight:600;color:var(--text2)}
+.form-input,.form-select,.form-textarea{width:100%;padding:.6rem .7rem;min-height:42px;
+  border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface2);
+  color:var(--text);outline:none}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent)}
+.form-textarea{min-height:76px;resize:vertical;line-height:1.5}
+.form-check{display:flex;align-items:center;gap:8px;font-size:13px;min-height:42px}
+.form-check input{width:19px;height:19px;accent-color:var(--accent)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-input,.filter-select{padding:.5rem .7rem;min-height:40px;border-radius:var(--radius);
+  border:1px solid var(--border2);background:var(--surface);color:var(--text);outline:none}
+.filter-input{flex:1;min-width:170px}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(6,18,30,.55);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:14px;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);width:100%;max-width:660px;max-height:88vh;display:flex;
+  flex-direction:column;overflow:hidden}
+.modal-header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:1rem 1.1rem;border-bottom:1px solid var(--border)}
+.modal-title{font-size:15px;font-weight:700}
+.modal-body{padding:1.1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;padding:.9rem 1.1rem;
+  border-top:1px solid var(--border);
+  padding-bottom:calc(.9rem + env(safe-area-inset-bottom,0px))}
+.btn-close{width:34px;height:34px;border:none;background:var(--surface3);border-radius:8px;
+  cursor:pointer;color:var(--text2);font-size:15px;flex-shrink:0}
+
+/* ===== ESTADO VAZIO ===== */
+.empty{text-align:center;padding:3rem 1.2rem;color:var(--text2)}
+.empty .ic{font-size:40px;opacity:.75}
+.empty h3{font-size:15px;font-weight:700;color:var(--text);margin:.7rem 0 .35rem}
+.empty p{font-size:13px;max-width:330px;margin:0 auto;line-height:1.55}
+
+/* ===== TOAST ===== */
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  z-index:400;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(92vw,420px)}
+.toast{background:var(--text);color:var(--bg);padding:.7rem 1rem;border-radius:11px;font-size:13px;
+  font-weight:600;box-shadow:var(--shadow-md);animation:up .22s ease}
+.toast.err{background:var(--red);color:#fff}
+.toast.ok{background:var(--green);color:#fff}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}
+
+/* ===== FUNIL ===== */
+.funil{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:1.1rem;
+  -webkit-overflow-scrolling:touch}
+.funil-et{flex:1;min-width:118px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:.65rem .7rem;cursor:pointer;text-align:left}
+.funil-et.on{border-color:var(--accent);background:var(--accent-bg)}
+.funil-et b{display:block;font-size:20px;font-weight:800;line-height:1.15}
+.funil-et span{font-size:11px;color:var(--text2);font-weight:600}
+
+/* ===== CLIENTE CARD ===== */
+.cli{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--border2);
+  border-radius:var(--radius-lg);padding:.9rem;box-shadow:var(--shadow);display:flex;
+  flex-direction:column;gap:7px}
+.cli.hoje{border-left-color:var(--green)}
+.cli.atrasado{border-left-color:var(--red)}
+.cli-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.cli-nome{font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+.cli-meta{font-size:11.5px;color:var(--text3);margin-top:1px}
+.cli-row{display:flex;gap:7px;font-size:12.5px;align-items:baseline}
+.cli-row .l{color:var(--text3);min-width:62px;flex-shrink:0;font-weight:600;font-size:11.5px}
+.cli-obs{font-size:12px;color:var(--text2);background:var(--surface2);border-radius:8px;
+  padding:.5rem .6rem;line-height:1.5}
+.cli-acoes{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+
+/* ===== VEICULO CARD ===== */
+.veic{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.veic-foto{width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--surface3);display:block}
+.veic-foto-vazia{width:100%;aspect-ratio:16/10;background:linear-gradient(135deg,var(--surface3),var(--surface2));
+  display:flex;align-items:center;justify-content:center;font-size:32px;opacity:.5}
+.veic-body{padding:.85rem .95rem;display:flex;flex-direction:column;gap:6px;flex:1}
+.veic-nome{font-size:15px;font-weight:700;letter-spacing:-.015em}
+.veic-preco{font-size:17px;font-weight:800;color:var(--accent-text)}
+.veic-specs{display:flex;gap:6px;flex-wrap:wrap;margin-top:1px}
+.veic-acoes{display:flex;gap:6px;margin-top:auto;padding-top:8px;flex-wrap:wrap}
+
+/* ===== SIMULADOR ===== */
+.sim-wrap{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:820px){.sim-wrap{grid-template-columns:1fr}}
+.sim-res{display:flex;flex-direction:column;gap:10px}
+.sim-hero{background:linear-gradient(135deg,var(--accent),var(--accent-soft));color:#fff;
+  border-radius:var(--radius-lg);padding:1.3rem;box-shadow:var(--shadow-md)}
+.sim-hero .eco{font-size:38px;font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.sim-hero .cap{font-size:12.5px;opacity:.92;margin-top:5px;font-weight:500}
+.sim-lin{display:flex;justify-content:space-between;gap:10px;padding:.55rem 0;
+  border-bottom:1px dashed var(--border);font-size:13px}
+.sim-lin:last-child{border-bottom:none}
+.sim-lin b{font-weight:700;white-space:nowrap}
+.tabela{width:100%;border-collapse:collapse;font-size:12.5px}
+.tabela th{text-align:left;font-size:11px;font-weight:700;color:var(--text2);
+  padding:.5rem .6rem;background:var(--surface2);border-bottom:1px solid var(--border)}
+.tabela td{padding:.55rem .6rem;border-bottom:1px solid var(--border)}
+.tabela tr:last-child td{border-bottom:none}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ===== TEMA MENU ===== */
+.tema-menu{position:absolute;top:50px;right:10px;background:var(--surface);
+  border:1px solid var(--border2);border-radius:var(--radius);box-shadow:var(--shadow-md);
+  padding:5px;z-index:300;display:flex;flex-direction:column;gap:2px;min-width:150px}
+.tema-opt{padding:.5rem .7rem;border:none;background:none;border-radius:7px;cursor:pointer;
+  text-align:left;color:var(--text);font-size:13px;min-height:38px}
+.tema-opt:hover{background:var(--surface3)}
+.tema-opt.on{background:var(--accent-bg);color:var(--accent-text);font-weight:600}
+
+.aviso{background:var(--amber-bg);color:var(--amber);border:1px solid currentColor;
+  border-radius:var(--radius);padding:.65rem .8rem;font-size:12.5px;line-height:1.5;
+  margin-bottom:1rem;font-weight:500}
+.qr-box{display:flex;flex-direction:column;align-items:center;gap:10px;padding:1rem}
+.qr-box img,.qr-box canvas{border-radius:10px;background:#fff;padding:9px}
+.link-box{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:8px;padding:.6rem;word-break:break-all;width:100%}
+</style>
+</head>
+<body>
+
+<div id="boot"><div class="spinner"></div><div style="font-size:13px;color:var(--text3)">Carregando painel…</div></div>
+
+<!-- ============ TELA DE CONEXAO ============ -->
+<div id="setup" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:900;overflow-y:auto;padding:24px 16px">
+  <div style="max-width:440px;margin:0 auto">
+    <div class="logo-lockup" style="justify-content:center;margin-bottom:6px">
+      <svg class="logo-byd" viewBox="0 0 132 26" xmlns="http://www.w3.org/2000/svg" aria-label="BYD">
+        <path d="M2 2h20a7 7 0 0 1 0 10H9v2h13a7 7 0 0 1 0 10H2v-4h20a3 3 0 0 0 0-6H5V8h17a3 3 0 0 0 0-6H2V2z"/>
+        <path d="M44 2h5l6 9 6-9h5l-8.5 12.5V24h-5v-9.5L44 2z"/>
+        <path d="M84 2h14c7.2 0 13 4.9 13 11s-5.8 11-13 11H84V2zm5 4v14h9c4.4 0 8-3.1 8-7s-3.6-7-8-7h-9z"/>
+      </svg>
+      <div class="logo-div"></div><span class="logo-parvi">Parvi</span>
+    </div>
+    <h2 style="font-size:19px;font-weight:800;text-align:center;letter-spacing:-.02em">Conectar ao seu banco</h2>
+    <p style="font-size:13px;color:var(--text2);text-align:center;margin:8px 0 20px;line-height:1.55">
+      A URL está em Project Settings → Data API. A chave está em Project Settings → API Keys.
+      Isso fica guardado neste aparelho, você só faz uma vez.
+    </p>
+    <div class="card">
+      <div class="form-grid">
+        <div class="form-group fg-full">
+          <label class="form-label" for="su-url">Project URL</label>
+          <input class="form-input" id="su-url" placeholder="https://abcdefgh.supabase.co"
+                 autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="url">
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="su-key">Publishable key</label>
+          <textarea class="form-textarea" id="su-key" rows="4" placeholder="sb_publishable_..."
+                    autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <button class="btn btn-dark" onclick="suTestar()" style="width:100%;margin-top:14px;min-height:46px">
+        Testar e conectar
+      </button>
+      <div id="su-msg" style="margin-top:12px"></div>
+    </div>
+    <p style="font-size:11.5px;color:var(--text3);margin-top:16px;line-height:1.6">
+      Use a <b>Publishable key</b>, que começa com <code>sb_publishable_</code>. Nunca use as
+      <b>Secret keys</b>: elas dão acesso total ao banco e não podem ficar numa página aberta.
+      Se o seu projeto ainda for do formato antigo, a chave <b>anon</b> da aba <i>Legacy</i>
+      também serve.
+    </p>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" onclick="fecharMenu()"></div>
+
+<div class="layout" id="app" style="display:none">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-lockup">
+        <svg class="logo-byd" viewBox="0 0 132 26" xmlns="http://www.w3.org/2000/svg" aria-label="BYD">
+          <path d="M2 2h20a7 7 0 0 1 0 10H9v2h13a7 7 0 0 1 0 10H2v-4h20a3 3 0 0 0 0-6H5V8h17a3 3 0 0 0 0-6H2V2z"/>
+          <path d="M44 2h5l6 9 6-9h5l-8.5 12.5V24h-5v-9.5L44 2z"/>
+          <path d="M84 2h14c7.2 0 13 4.9 13 11s-5.8 11-13 11H84V2zm5 4v14h9c4.4 0 8-3.1 8-7s-3.6-7-8-7h-9z"/>
+        </svg>
+        <div class="logo-div"></div>
+        <span class="logo-parvi">Parvi</span>
+      </div>
+      <div class="logo-sub" id="sb-loja">Olinda · Painel comercial</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Meu dia</div>
+      <button class="nav-item active" onclick="setTab('hoje',this)">🎯 <span>Hoje</span><span class="nav-badge" id="bd-hoje">0</span></button>
+      <button class="nav-item" onclick="setTab('clientes',this)">👤 <span>Clientes</span><span class="nav-badge" id="bd-cli">0</span></button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Venda</div>
+      <button class="nav-item" onclick="setTab('catalogo',this)">🚗 <span>Catálogo</span><span class="nav-badge" id="bd-veic">0</span></button>
+      <button class="nav-item" onclick="setTab('simulador',this)">⚡ <span>Economia</span></button>
+      <button class="nav-item" onclick="setTab('argumentos',this)">💬 <span>Argumentos</span></button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Gestão</div>
+      <button class="nav-item" onclick="setTab('funil',this)">📊 <span>Funil</span></button>
+      <button class="nav-item" onclick="setTab('config',this)">⚙️ <span>Ajustes</span></button>
+    </div>
+
+    <div class="sidebar-footer">
+      <div id="sb-vend">—</div>
+      <div id="sb-status" style="margin-top:3px">·</div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+        <button class="menu-btn" onclick="abrirMenu()" aria-label="Menu">☰</button>
+        <h1 id="tb-title">Hoje</h1>
+      </div>
+      <div class="topbar-right" id="tb-right"></div>
+    </header>
+
+    <main class="content">
+
+      <!-- ===== HOJE ===== -->
+      <div id="tab-hoje">
+        <div class="grid-kpi" id="h-kpis"></div>
+        <h2 style="font-size:13px;font-weight:700;margin:0 0 .7rem">Retornos de hoje e atrasados</h2>
+        <div class="grid" id="h-lista"></div>
+      </div>
+
+      <!-- ===== CLIENTES ===== -->
+      <div id="tab-clientes" style="display:none">
+        <div class="funil" id="c-funil"></div>
+        <div class="filters">
+          <input class="filter-input" id="c-busca" placeholder="Buscar nome, telefone, modelo…" oninput="cRender()">
+          <select class="filter-select" id="c-origem" onchange="cRender()">
+            <option value="">Toda origem</option>
+          </select>
+          <select class="filter-select" id="c-ordem" onchange="cRender()">
+            <option value="retorno">Por retorno</option>
+            <option value="recente">Mais recentes</option>
+            <option value="valor">Maior valor</option>
+          </select>
+        </div>
+        <div class="grid" id="c-lista"></div>
+      </div>
+
+      <!-- ===== CATALOGO ===== -->
+      <div id="tab-catalogo" style="display:none">
+        <div class="aviso" id="v-aviso">
+          Preços vieram da tabela pública da BYD e servem de referência. Confirme a campanha vigente
+          na tabela da Parvi antes de falar valor com cliente. As fichas técnicas estão em branco de
+          propósito — preencha pelo material oficial.
+        </div>
+        <div class="filters">
+          <input class="filter-input" id="v-busca" placeholder="Buscar modelo…" oninput="vRender()">
+          <select class="filter-select" id="v-tec" onchange="vRender()">
+            <option value="">BEV e PHEV</option>
+            <option value="BEV">Só elétrico (BEV)</option>
+            <option value="PHEV">Só híbrido (PHEV)</option>
+          </select>
+        </div>
+        <div class="grid" id="v-lista"></div>
+      </div>
+
+      <!-- ===== SIMULADOR ===== -->
+      <div id="tab-simulador" style="display:none">
+        <div class="sim-wrap">
+          <div class="card">
+            <div class="form-grid">
+              <div class="form-group fg-full">
+                <label class="form-label" for="s-veic">Veículo BYD</label>
+                <select class="form-select" id="s-veic" onchange="sCalc()"></select>
+              </div>
+              <div class="form-group fg-full">
+                <label class="form-label" for="s-km">Quilômetros por mês</label>
+                <input class="form-input" id="s-km" type="number" inputmode="numeric" value="1200" oninput="sCalc()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="s-kwh">Consumo (kWh/100 km)</label>
+                <input class="form-input" id="s-kwh" type="number" step="0.1" inputmode="decimal" value="13" oninput="sCalc()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="s-tar">Tarifa (R$/kWh)</label>
+                <input class="form-input" id="s-tar" type="number" step="0.01" inputmode="decimal" value="1.05" oninput="sCalc()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="s-cons">Carro atual (km/l)</label>
+                <input class="form-input" id="s-cons" type="number" step="0.1" inputmode="decimal" value="11" oninput="sCalc()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="s-gas">Gasolina (R$/l)</label>
+                <input class="form-input" id="s-gas" type="number" step="0.01" inputmode="decimal" value="6.30" oninput="sCalc()">
+              </div>
+              <div class="form-group fg-full">
+                <label class="form-label" for="s-ipva">IPVA que paga hoje (R$/ano)</label>
+                <input class="form-input" id="s-ipva" type="number" inputmode="numeric" value="0" oninput="sCalc()">
+              </div>
+            </div>
+            <p style="font-size:11.5px;color:var(--text3);margin-top:.8rem;line-height:1.5">
+              Isenção de IPVA para elétricos depende da lei do estado e muda. Confirme a regra de
+              Pernambuco antes de usar esse número com cliente.
+            </p>
+          </div>
+
+          <div class="sim-res">
+            <div class="aviso" id="s-phev" style="display:none;margin-bottom:0"></div>
+            <div class="sim-hero">
+              <div class="eco" id="s-eco">R$ 0</div>
+              <div class="cap" id="s-cap">economia por mês só em combustível</div>
+            </div>
+            <div class="card" id="s-det"></div>
+            <div class="card">
+              <div style="font-size:12.5px;font-weight:700;margin-bottom:.6rem">Acumulado</div>
+              <div class="scroll-x"><table class="tabela" id="s-tab"></table></div>
+            </div>
+            <button class="btn btn-wa" onclick="sEnviarWhats()" style="min-height:44px">
+              Enviar essa conta no WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ARGUMENTOS ===== -->
+      <div id="tab-argumentos" style="display:none">
+        <div class="filters">
+          <input class="filter-input" id="a-busca" placeholder="Buscar objeção…" oninput="aRender()">
+        </div>
+        <div class="grid" id="a-lista"></div>
+      </div>
+
+      <!-- ===== FUNIL ===== -->
+      <div id="tab-funil" style="display:none">
+        <div class="grid-kpi" id="f-kpis"></div>
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:.8rem">Etapas do funil</div>
+          <div id="f-barras"></div>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div style="font-size:13px;font-weight:700;margin-bottom:.8rem">Origem dos clientes</div>
+            <div id="f-origem"></div>
+          </div>
+          <div class="card">
+            <div style="font-size:13px;font-weight:700;margin-bottom:.8rem">Interesse por modelo</div>
+            <div id="f-modelo"></div>
+          </div>
+          <div class="card">
+            <div style="font-size:13px;font-weight:700;margin-bottom:.8rem">Motivos de perda</div>
+            <div id="f-perda"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CONFIG ===== -->
+      <div id="tab-config" style="display:none">
+        <div class="card" style="max-width:520px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:.9rem">Seus dados</div>
+          <div class="form-grid">
+            <div class="form-group fg-full">
+              <label class="form-label" for="cfg-nome">Seu nome</label>
+              <input class="form-input" id="cfg-nome">
+            </div>
+            <div class="form-group fg-full">
+              <label class="form-label" for="cfg-wpp">Seu WhatsApp (só números, com DDD)</label>
+              <input class="form-input" id="cfg-wpp" inputmode="numeric" placeholder="5581999999999">
+            </div>
+            <div class="form-group fg-full">
+              <label class="form-label" for="cfg-loja">Loja</label>
+              <input class="form-input" id="cfg-loja">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:1rem">
+            <button class="btn btn-dark" onclick="cfgSalvar()">Salvar</button>
+          </div>
+        </div>
+
+        <div class="card" style="max-width:520px;margin-top:12px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:.5rem">Ficha pública dos veículos</div>
+          <p style="font-size:12.5px;color:var(--text2);line-height:1.55;margin-bottom:.9rem">
+            O botão abaixo baixa o arquivo <b>veiculo.html</b> já com sua conexão e seu WhatsApp
+            dentro, pronto para subir no GitHub junto com o painel. É ele que abre quando o
+            cliente aponta a câmera no QR Code.
+          </p>
+          <button class="btn btn-dark" onclick="gerarFicha()">Baixar veiculo.html pronto</button>
+        </div>
+
+        <div class="card" style="max-width:520px;margin-top:12px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:.5rem">Conexão com o banco</div>
+          <p style="font-size:12.5px;color:var(--text2);line-height:1.55;margin-bottom:.9rem">
+            Conectado em <b id="cfg-url">—</b>. Trocar de projeto apaga a conexão
+            deste aparelho, mas não apaga nada no Supabase.
+          </p>
+          <button class="btn btn-danger" onclick="trocarConexao()">Trocar conexão</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ MODAIS ============ -->
+<div class="modal-overlay" id="c-modal" style="display:none" onclick="if(event.target===this)cFechar()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="c-modal-tit">Novo cliente</div>
+      <button class="btn-close" onclick="cFechar()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group fg-full">
+          <label class="form-label" for="c-nome">Nome</label>
+          <input class="form-input" id="c-nome" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-wpp">WhatsApp</label>
+          <input class="form-input" id="c-wpp" inputmode="numeric" placeholder="81 9 9999-9999">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-cidade">Cidade</label>
+          <input class="form-input" id="c-cidade" placeholder="Olinda">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-origemf">Como chegou</label>
+          <select class="form-select" id="c-origemf"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-etapa">Etapa</label>
+          <select class="form-select" id="c-etapa"></select>
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="c-veic">Veículo de interesse</label>
+          <select class="form-select" id="c-veic"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-pagto">Forma de pagamento</label>
+          <select class="form-select" id="c-pagto"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-entrada">Entrada (R$)</label>
+          <input class="form-input" id="c-entrada" type="number" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-perfil">Perfil de uso</label>
+          <select class="form-select" id="c-perfil">
+            <option value="">—</option><option>Urbano</option><option>Viagem</option><option>Misto</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="c-retorno">Retornar em</label>
+          <input class="form-input" id="c-retorno" type="date">
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="c-passo">Próximo passo</label>
+          <input class="form-input" id="c-passo" placeholder="Ex.: agendar test-drive sábado 10h">
+        </div>
+        <div class="form-group">
+          <div class="form-check"><input type="checkbox" id="c-garagem"><label for="c-garagem">Tem garagem para carregador</label></div>
+        </div>
+        <div class="form-group">
+          <div class="form-check"><input type="checkbox" id="c-troca" onchange="cToggleTroca()"><label for="c-troca">Tem carro na troca</label></div>
+        </div>
+        <div class="form-group fg-full" id="c-troca-wrap" style="display:none">
+          <label class="form-label" for="c-trocad">Carro da troca</label>
+          <input class="form-input" id="c-trocad" placeholder="Ex.: Corolla XEi 2019, 62.000 km">
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="c-obs">Observações</label>
+          <textarea class="form-textarea" id="c-obs" rows="3"></textarea>
+        </div>
+        <div class="form-group fg-full" id="c-perda-wrap" style="display:none">
+          <label class="form-label" for="c-perda">Motivo da perda</label>
+          <select class="form-select" id="c-perda">
+            <option value="">—</option><option>Preço</option><option>Crédito negado</option>
+            <option>Comprou de outra marca</option><option>Adiou a compra</option>
+            <option>Autonomia / recarga</option><option>Prazo de entrega</option><option>Sumiu</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="c-btn-del" onclick="cExcluir()" style="margin-right:auto;display:none">Excluir</button>
+      <button class="btn" onclick="cFechar()">Cancelar</button>
+      <button class="btn btn-dark" onclick="cSalvar()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="v-modal" style="display:none" onclick="if(event.target===this)vFechar()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="v-modal-tit">Veículo</div>
+      <button class="btn-close" onclick="vFechar()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="v-modelo">Modelo</label>
+          <input class="form-input" id="v-modelo">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-versao">Versão</label>
+          <input class="form-input" id="v-versao">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-seg">Segmento</label>
+          <input class="form-input" id="v-seg">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-tecf">Tecnologia</label>
+          <select class="form-select" id="v-tecf"><option>BEV</option><option>PHEV</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-preco">Preço (R$)</label>
+          <input class="form-input" id="v-preco" type="number" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-estoque">Em estoque</label>
+          <input class="form-input" id="v-estoque" type="number" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-aut">Autonomia (km)</label>
+          <input class="form-input" id="v-aut" type="number" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-pot">Potência (cv)</label>
+          <input class="form-input" id="v-pot" type="number" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-bat">Bateria (kWh)</label>
+          <input class="form-input" id="v-bat" type="number" step="0.1" inputmode="decimal">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="v-cons">Consumo (kWh/100 km)</label>
+          <input class="form-input" id="v-cons" type="number" step="0.1" inputmode="decimal">
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="v-cores">Cores disponíveis</label>
+          <input class="form-input" id="v-cores" placeholder="Branco Ártico, Azul Glacial, Preto Cosmos">
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="v-dest">Destaques (um por linha)</label>
+          <textarea class="form-textarea" id="v-dest" rows="4"></textarea>
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="v-foto">Foto</label>
+          <input class="form-input" id="v-foto" type="file" accept="image/*" onchange="vFoto(this)">
+          <div id="v-foto-prev" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="vFechar()">Cancelar</button>
+      <button class="btn btn-dark" onclick="vSalvar()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="q-modal" style="display:none" onclick="if(event.target===this)qFechar()">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-header">
+      <div class="modal-title">Ficha do veículo</div>
+      <button class="btn-close" onclick="qFechar()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="qr-box">
+        <div id="q-code"></div>
+        <p style="font-size:12.5px;color:var(--text2);text-align:center;line-height:1.5">
+          O cliente aponta a câmera e abre a ficha do carro no celular dele, com botão
+          para falar com você no WhatsApp.
+        </p>
+        <div class="link-box" id="q-link"></div>
+        <button class="btn" onclick="qCopiar()" style="width:100%">Copiar link</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="i-modal" style="display:none" onclick="if(event.target===this)iFechar()">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <div class="modal-title" id="i-tit">Histórico</div>
+      <button class="btn-close" onclick="iFechar()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="margin-bottom:1rem">
+        <div class="form-group">
+          <label class="form-label" for="i-tipo">Tipo</label>
+          <select class="form-select" id="i-tipo">
+            <option>WhatsApp</option><option>Ligação</option><option>Showroom</option>
+            <option>Test-drive</option><option>Proposta</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">&nbsp;</label>
+          <button class="btn btn-dark" onclick="iSalvar()">Registrar</button>
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-label" for="i-resumo">O que aconteceu</label>
+          <input class="form-input" id="i-resumo" placeholder="Ex.: mandou foto do Seal, pediu simulação">
+        </div>
+      </div>
+      <div id="i-lista"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* =========================================================
+   PAINEL COMERCIAL BYD PARVI
+   Prefixos: c_ clientes | v_ veiculos | s_ simulador
+             a_ argumentos | f_ funil | i_ interacoes
+   ========================================================= */
+
+/* ---------- 1. CONEXAO SUPABASE ----------
+   Nada para editar aqui. Na primeira vez que o painel abrir,
+   ele pede a URL e a chave numa tela e guarda no navegador.
+   Para trocar depois: aba Ajustes > Conexão. */
+let SUPA_URL='', SUPA_KEY='', SUPA_AUTH='apikey';  // apikey | bearer
+function carregarConexao(){
+  try{
+    const j=JSON.parse(localStorage.getItem('bp_supa')||'{}');
+    SUPA_URL=(j.url||'').replace(/\/+$/,'');
+    SUPA_KEY=j.key||'';
+    SUPA_AUTH=j.auth || (/^eyJ/.test(SUPA_KEY)?'bearer':'apikey');
+  }catch(e){ SUPA_URL=''; SUPA_KEY=''; }
+  return !!(SUPA_URL && SUPA_KEY);
+}
+function salvarConexao(url, key, auth){
+  SUPA_URL=String(url||'').trim().replace(/\/+$/,'');
+  SUPA_KEY=String(key||'').trim();
+  SUPA_AUTH=auth || (/^eyJ/.test(SUPA_KEY)?'bearer':'apikey');
+  try{ localStorage.setItem('bp_supa', JSON.stringify({url:SUPA_URL,key:SUPA_KEY,auth:SUPA_AUTH})); }catch(e){}
+}
+function H(){
+  // Qual combinacao de cabecalho funciona depende do formato da chave e da
+  // versao do projeto. O teste de conexao descobre e guarda em SUPA_AUTH.
+  const h={'Content-Type':'application/json', apikey:SUPA_KEY, Prefer:'return=representation'};
+  if(SUPA_AUTH==='bearer') h.Authorization='Bearer '+SUPA_KEY;
+  return h;
+}
+const HEADERS = H;
+
+async function dbGet(t, p=''){
+  const r = await fetch(`${SUPA_URL}/rest/v1/${t}?select=*${p}`, {headers:H()});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function dbGetSafe(t, p=''){ try{ return await dbGet(t,p); }catch(e){ console.warn('dbGetSafe',t,e); return []; } }
+async function dbInsert(t, d){
+  const b={...d}; delete b.id;
+  const r = await fetch(`${SUPA_URL}/rest/v1/${t}`,{method:'POST',headers:H(),body:JSON.stringify(b)});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function dbUpdate(t, id, d){
+  const b={...d}; delete b.id;
+  const r = await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:H(),body:JSON.stringify(b)});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function dbDelete(t, id){
+  const r = await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'DELETE',headers:H()});
+  if(!r.ok) throw new Error(await r.text());
+}
+
+function erroLegivel(e, acao){
+  let m = (e && e.message) || String(e);
+  try{ const j=JSON.parse(m); m = j.message + (j.hint ? ' — '+j.hint : ''); }catch(_){}
+  let dica='';
+  if(/Could not find the .* column|column .* does not exist/i.test(m)) dica=' Falta rodar o SQL das colunas novas.';
+  else if(/row-level security/i.test(m))                              dica=' Falta liberar a policy de RLS.';
+  else if(/Failed to fetch|NetworkError/i.test(m))                     dica=' Sem conexão, ou o banco mudou. Veja Ajustes > Conexão.';
+  toast('Não deu para '+acao+'.'+dica, 'err');
+  console.error(acao, e);
+}
+
+/* ---------- 2. HELPERS ---------- */
+function esc(s){ return String(s==null?'':s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function brl(v){ return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function brl2(v){ return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function hojeISO(){ const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function fmtData(d){ if(!d) return '—'; const p=String(d).slice(0,10).split('-'); return p.length===3?`${p[2]}/${p[1]}`:d; }
+function diasAte(d){
+  if(!d) return null;
+  const h=new Date(); h.setHours(0,0,0,0);
+  const t=new Date(String(d).slice(0,10)+'T00:00:00');
+  if(isNaN(t)) return null;
+  return Math.round((t-h)/86400000);
+}
+function soNum(s){ return String(s||'').replace(/\D/g,''); }
+function waLink(fone, texto){
+  const n = soNum(fone); if(!n) return '';
+  const d = n.length<=11 ? '55'+n : n;
+  return 'https://wa.me/'+d+(texto?('?text='+encodeURIComponent(texto)):'');
+}
+function toast(msg, tipo){
+  const w=document.getElementById('toast');
+  const el=document.createElement('div');
+  el.className='toast'+(tipo?' '+tipo:'');
+  el.textContent=msg; w.appendChild(el);
+  setTimeout(()=>el.remove(), 3400);
+}
+function slugify(s){
+  return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+function comprimir(file, cb){
+  const fr=new FileReader();
+  fr.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=900; let w=img.width,h=img.height;
+      if(w>h && w>MAX){ h=Math.round(h*MAX/w); w=MAX; }
+      else if(h>=w && h>MAX){ w=Math.round(w*MAX/h); h=MAX; }
+      const cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+      const cx=cv.getContext('2d'); cx.fillStyle='#fff'; cx.fillRect(0,0,w,h); cx.drawImage(img,0,0,w,h);
+      cb(cv.toDataURL('image/jpeg',0.74));
+    };
+    img.src=e.target.result;
+  };
+  fr.readAsDataURL(file);
+}
+
+/* ---------- 3. TEMAS ---------- */
+const TEMAS=[{k:'light',n:'Claro'},{k:'dark',n:'Escuro'},{k:'noir',n:'Preto'},{k:'vidro',n:'Vidro'}];
+function sysDark(){ try{ return matchMedia('(prefers-color-scheme: dark)').matches; }catch(e){ return false; } }
+function temaAtual(){ try{ return localStorage.getItem('bp_tema')||'light'; }catch(e){ return 'light'; } }
+function aplicarTema(t){
+  const r=document.documentElement;
+  const dk = (t==='dark'||t==='noir'||(t==='vidro'&&sysDark()));
+  r.classList.toggle('vidro', t==='vidro');
+  r.classList.toggle('dark',  dk);
+  r.classList.toggle('noir',  t==='noir');
+  try{ localStorage.setItem('bp_tema',t); }catch(e){}
+  const mc=document.querySelector('meta[name="theme-color"]');
+  if(mc) mc.setAttribute('content', dk ? '#0e1219' : '#2F87C8');
+}
+function menuTema(){
+  const old=document.getElementById('tema-menu'); if(old){ old.remove(); return; }
+  const at=temaAtual();
+  const m=document.createElement('div');
+  m.className='tema-menu'; m.id='tema-menu';
+  m.innerHTML=TEMAS.map(t=>`<button class="tema-opt${t.k===at?' on':''}" onclick="aplicarTema('${t.k}');document.getElementById('tema-menu')?.remove()">${t.n}</button>`).join('');
+  document.querySelector('.main').appendChild(m);
+}
+try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ if(temaAtual()==='vidro') aplicarTema('vidro'); }); }catch(e){}
+
+/* ---------- 4. NAVEGACAO ---------- */
+const ABAS=['hoje','clientes','catalogo','simulador','argumentos','funil','config'];
+const TITULOS={hoje:'Hoje',clientes:'Clientes',catalogo:'Catálogo',simulador:'Economia de rodar elétrico',
+  argumentos:'Respostas para objeções',funil:'Funil',config:'Ajustes'};
+const ACOES={
+  clientes:'<button class="btn btn-dark" onclick="cNovo()">+ Cliente</button>',
+  catalogo:'<button class="btn btn-dark" onclick="vNovo()">+ Veículo</button>',
+  hoje:'<button class="btn btn-dark" onclick="cNovo()">+ Cliente</button>'
+};
+let abaAtual='hoje';
+
+function setTab(tab, el){
+  abaAtual=tab;
+  ABAS.forEach(t=>{
+    const d=document.getElementById('tab-'+t);
+    if(d) d.style.display = (t===tab)?'':'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.getElementById('tb-title').textContent = TITULOS[tab]||tab;
+
+  const tr=document.getElementById('tb-right');
+  tr.innerHTML = (ACOES[tab]||'') +
+    '<button class="btn-icon" title="Tema" onclick="menuTema()">◑</button>' +
+    '<button class="btn-icon" title="Recarregar" onclick="location.reload()">↻</button>';
+
+  try{ localStorage.setItem('bp_aba',tab); }catch(e){}
+  fecharMenu();
+  document.getElementById('tema-menu')?.remove();
+  window.scrollTo(0,0);
+
+  if(tab==='hoje')       hRender();
+  if(tab==='clientes')   cRender();
+  if(tab==='catalogo')   vRender();
+  if(tab==='simulador')  sInit();
+  if(tab==='argumentos') aRender();
+  if(tab==='funil')      fRender();
+  if(tab==='config')     cfgRender();
+}
+function abrirMenu(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('scrim').classList.add('on'); }
+function fecharMenu(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('scrim').classList.remove('on'); }
+
+/* ---------- 5. ESTADO ---------- */
+let CLIENTES=[], VEICULOS=[], CFG={};
+const ETAPAS=[
+  {k:'novo',       n:'Novo',       c:'b-ac'},
+  {k:'contato',    n:'Em contato', c:'b-pu'},
+  {k:'test_drive', n:'Test-drive', c:'b-am'},
+  {k:'proposta',   n:'Proposta',   c:'b-am'},
+  {k:'fechado',    n:'Fechado',    c:'b-ok'},
+  {k:'perdido',    n:'Perdido',    c:'b-red'}
+];
+const ORIGENS=['Showroom','Indicação','Instagram','Site','Telefone','Evento','Passagem'];
+const PAGTOS=['Financiamento','À vista','Consórcio','PCD','CNPJ','Taxista'];
+function etapaInfo(k){ return ETAPAS.find(e=>e.k===k) || ETAPAS[0]; }
+
+/* ---------- 6. BOOT ---------- */
+function suMostrar(){
+  document.getElementById('boot').style.display='none';
+  document.getElementById('app').style.display='none';
+  document.getElementById('setup').style.display='';
+  if(SUPA_URL) document.getElementById('su-url').value=SUPA_URL;
+  if(SUPA_KEY) document.getElementById('su-key').value=SUPA_KEY;
+}
+async function suTestar(){
+  const url=document.getElementById('su-url').value.trim().replace(/\/+$/,'').replace(/\/rest\/v1$/,'');
+  const key=document.getElementById('su-key').value.trim().replace(/\s+/g,'');
+  const msg=document.getElementById('su-msg');
+  const diz=(t,c)=>msg.innerHTML=`<div class="aviso" style="margin:0;${c||''}">${t}</div>`;
+  const erro=t=>diz(t,'background:var(--red-bg);color:var(--red)');
+
+  if(!/^https:\/\/[\w-]+\.supabase\.co$/i.test(url)){
+    erro('A URL deve ser só <b>https://seu-projeto.supabase.co</b>, sem /rest/v1 e sem barra no fim.'); return; }
+  if(/^sb_secret_/.test(key)){
+    erro('Essa é uma Secret key. Use a Publishable key — a secret dá acesso total ao banco.'); return; }
+  if(/service_role/.test(key)){
+    erro('Essa é a chave service_role. Use a Publishable ou a anon.'); return; }
+  if(!/^sb_publishable_[\w-]{10,}$/.test(key) && !/^eyJ[\w-]+\./.test(key)){
+    erro('Essa não parece a chave certa. Ela começa com <b>sb_publishable_</b> (formato novo) ou com <b>eyJ</b> (aba Legacy).'); return; }
+
+  diz('Testando…');
+  // Tenta as duas formas de cabeçalho: chave nova costuma ir só no apikey,
+  // chave antiga vai também no Authorization. Guarda a que funcionar.
+  const modos = /^eyJ/.test(key) ? ['bearer','apikey'] : ['apikey','bearer'];
+  let ultimo = null;
+  for(const modo of modos){
+    const h={apikey:key};
+    if(modo==='bearer') h.Authorization='Bearer '+key;
+    let r;
+    try{
+      r = await fetch(url+'/rest/v1/bp_veiculos?select=id&limit=1', {headers:h});
+    }catch(e){
+      erro('Não deu para alcançar <b>'+esc(url)+'</b>. Confira a URL e sua internet.'); return;
+    }
+    if(r.ok){
+      salvarConexao(url, key, modo);
+      diz('Conectado. Carregando o painel…','background:var(--green-bg);color:var(--green)');
+      setTimeout(()=>{ document.getElementById('setup').style.display='none'; boot(); }, 500);
+      return;
+    }
+    let corpo=''; try{ corpo=await r.text(); }catch(e){}
+    let det=corpo;
+    try{ const j=JSON.parse(corpo); det=[j.message,j.hint,j.details].filter(Boolean).join(' — '); }catch(e){}
+    ultimo={status:r.status, det:det||('HTTP '+r.status), modo};
+
+    if(r.status===404){
+      erro('A conexão funcionou, mas a tabela <b>bp_veiculos</b> não existe neste projeto.<br><br>'
+          +'Rode o <b>schema.sql</b> inteiro no SQL Editor do Supabase e tente de novo.'); return;
+    }
+    if(r.status!==401 && r.status!==403) break;  // 5xx e outros: não adianta trocar cabeçalho
+  }
+
+  erro('O Supabase recusou a conexão.<br><br>'
+      +'<b>Resposta:</b> '+esc(ultimo.det)+' <span style="opacity:.7">(HTTP '+ultimo.status+')</span><br><br>'
+      +'O que costuma ser:<br>'
+      +'1. A chave foi copiada pela metade. Use o botão de copiar da Supabase, não o mouse — ela aparece cortada na tela.<br>'
+      +'2. A chave é de outro projeto. Confira se o endereço bate com o projeto aberto lá.<br>'
+      +'3. O Data API está desligado, em Project Settings → Data API.');
+}
+function trocarConexao(){
+  if(!confirm('Trocar a conexão? Você vai precisar colar a URL e a chave de novo. Nada é apagado no Supabase.')) return;
+  try{ localStorage.removeItem('bp_supa'); }catch(e){}
+  location.reload();
+}
+
+async function boot(){
+  if(!carregarConexao()){ aplicarTema(temaAtual()); suMostrar(); return; }
+  try{
+    const [cli, vei, cfg] = await Promise.all([
+      dbGetSafe('bp_clientes','&order=id.desc'),
+      dbGetSafe('bp_veiculos','&order=preco.asc'),
+      dbGetSafe('bp_config')
+    ]);
+    CLIENTES=cli; VEICULOS=vei;
+    CFG={}; (cfg||[]).forEach(r=>CFG[r.chave]=r.valor);
+  }catch(e){ erroLegivel(e,'carregar os dados'); }
+
+  aplicarTema(temaAtual());
+  popularSelects();
+  document.getElementById('sb-loja').textContent = (CFG.loja_nome||'BYD Parvi Olinda');
+  document.getElementById('sb-vend').textContent = CFG.vendedor_nome ? ('👤 '+CFG.vendedor_nome) : '👤 configure em Ajustes';
+  document.getElementById('sb-status').textContent = '🟢 conectado';
+
+  document.getElementById('boot').style.display='none';
+  document.getElementById('app').style.display='';
+
+  let inicial='hoje';
+  try{ const s=localStorage.getItem('bp_aba'); if(s&&ABAS.includes(s)) inicial=s; }catch(e){}
+  const btns=[...document.querySelectorAll('.nav-item')];
+  const alvo=btns.find(b=>b.getAttribute('onclick').includes("'"+inicial+"'"));
+  setTab(inicial, alvo||btns[0]);
+  badges();
+}
+
+function badges(){
+  const pend = CLIENTES.filter(c=>!['fechado','perdido'].includes(c.etapa) && c.data_retorno && diasAte(c.data_retorno)<=0).length;
+  const bh=document.getElementById('bd-hoje');
+  bh.textContent=pend; bh.classList.toggle('hot', pend>0);
+  document.getElementById('bd-cli').textContent  = CLIENTES.filter(c=>!['fechado','perdido'].includes(c.etapa)).length;
+  document.getElementById('bd-veic').textContent = VEICULOS.filter(v=>v.ativo!==false).length;
+}
+
+function popularSelects(){
+  const opt=(a)=>a.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+  document.getElementById('c-origemf').innerHTML='<option value="">—</option>'+opt(ORIGENS);
+  document.getElementById('c-pagto').innerHTML  ='<option value="">—</option>'+opt(PAGTOS);
+  document.getElementById('c-etapa').innerHTML  =ETAPAS.map(e=>`<option value="${e.k}">${e.n}</option>`).join('');
+  document.getElementById('c-origem').innerHTML ='<option value="">Toda origem</option>'+opt(ORIGENS);
+  const vo='<option value="">—</option>'+VEICULOS.map(v=>`<option value="${v.id}">${esc(nomeVeic(v))}</option>`).join('');
+  document.getElementById('c-veic').innerHTML=vo;
+  document.getElementById('c-etapa').onchange=()=>{
+    document.getElementById('c-perda-wrap').style.display =
+      document.getElementById('c-etapa').value==='perdido' ? '' : 'none';
+  };
+}
+function nomeVeic(v){ return (v.modelo+' '+(v.versao||'')).trim(); }
+
+/* =========================================================
+   MODULO HOJE
+   ========================================================= */
+function hRender(){
+  const pend = CLIENTES.filter(c=>!['fechado','perdido'].includes(c.etapa));
+  const hoje = pend.filter(c=>c.data_retorno && diasAte(c.data_retorno)===0);
+  const atr  = pend.filter(c=>c.data_retorno && diasAte(c.data_retorno)<0);
+  const td   = pend.filter(c=>c.etapa==='test_drive').length;
+  const prop = pend.filter(c=>c.etapa==='proposta');
+  const pipe = prop.reduce((s,c)=>s+Number(c.valor_negocio||precoDoCliente(c)||0),0);
+
+  document.getElementById('h-kpis').innerHTML = `
+    <div class="kpi ${atr.length?'hot':''}"><div class="v">${atr.length}</div><div class="l">Atrasados</div></div>
+    <div class="kpi ac"><div class="v">${hoje.length}</div><div class="l">Retornar hoje</div></div>
+    <div class="kpi"><div class="v">${td}</div><div class="l">Test-drive marcado</div></div>
+    <div class="kpi ok"><div class="v">${brl(pipe)}</div><div class="l">Em proposta</div></div>`;
+
+  const lista=[...atr.sort((a,b)=>String(a.data_retorno).localeCompare(String(b.data_retorno))), ...hoje];
+  const el=document.getElementById('h-lista');
+  if(!lista.length){
+    el.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="ic">☕</div>
+      <h3>Nenhum retorno vencido</h3>
+      <p>Quando você marcar uma data de retorno num cliente, ele aparece aqui no dia certo.</p>
+      <button class="btn btn-dark" style="margin-top:1rem" onclick="cNovo()">Cadastrar cliente</button></div>`;
+    return;
+  }
+  el.innerHTML=lista.map(cardCliente).join('');
+}
+function precoDoCliente(c){
+  const v=VEICULOS.find(v=>String(v.id)===String(c.veiculo_id));
+  return v ? Number(v.preco||0) : 0;
+}
+
+/* =========================================================
+   MODULO CLIENTES
+   ========================================================= */
+let cFiltroEtapa='';
+function cRender(){
+  const busca=(document.getElementById('c-busca').value||'').toLowerCase().trim();
+  const org=document.getElementById('c-origem').value;
+  const ord=document.getElementById('c-ordem').value;
+
+  document.getElementById('c-funil').innerHTML =
+    `<button class="funil-et ${cFiltroEtapa===''?'on':''}" onclick="cFiltro('')">
+       <b>${CLIENTES.length}</b><span>Todos</span></button>` +
+    ETAPAS.map(e=>{
+      const n=CLIENTES.filter(c=>c.etapa===e.k).length;
+      return `<button class="funil-et ${cFiltroEtapa===e.k?'on':''}" onclick="cFiltro('${e.k}')">
+        <b>${n}</b><span>${e.n}</span></button>`;
+    }).join('');
+
+  let l=CLIENTES.filter(c=>{
+    if(cFiltroEtapa && c.etapa!==cFiltroEtapa) return false;
+    if(org && c.origem!==org) return false;
+    if(busca){
+      const alvo=`${c.nome||''} ${c.whatsapp||''} ${c.veiculo_nome||''} ${c.obs||''} ${c.cidade||''}`.toLowerCase();
+      if(!alvo.includes(busca)) return false;
+    }
+    return true;
+  });
+
+  if(ord==='retorno'){
+    l.sort((a,b)=>{
+      const A=a.data_retorno||'9999-12-31', B=b.data_retorno||'9999-12-31';
+      return A.localeCompare(B);
+    });
+  } else if(ord==='valor'){
+    l.sort((a,b)=>(Number(b.valor_negocio||precoDoCliente(b))||0)-(Number(a.valor_negocio||precoDoCliente(a))||0));
+  } else {
+    l.sort((a,b)=>Number(b.id)-Number(a.id));
+  }
+
+  const el=document.getElementById('c-lista');
+  if(!l.length){
+    el.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="ic">👤</div>
+      <h3>Nenhum cliente por aqui</h3>
+      <p>Cadastre quem passou no showroom hoje — leva 20 segundos e você não perde o retorno.</p>
+      <button class="btn btn-dark" style="margin-top:1rem" onclick="cNovo()">Cadastrar cliente</button></div>`;
+    return;
+  }
+  el.innerHTML=l.map(cardCliente).join('');
+}
+function cFiltro(k){ cFiltroEtapa=k; cRender(); }
+
+function cardCliente(c){
+  const d=diasAte(c.data_retorno);
+  const ativo=!['fechado','perdido'].includes(c.etapa);
+  let cls='';
+  if(ativo && d!==null){ if(d<0) cls='atrasado'; else if(d===0) cls='hoje'; }
+  const et=etapaInfo(c.etapa);
+  const v=VEICULOS.find(x=>String(x.id)===String(c.veiculo_id));
+  const nomeV=c.veiculo_nome || (v?nomeVeic(v):'');
+  const wa=waLink(c.whatsapp, msgRetorno(c));
+  let alerta='';
+  if(ativo && d!==null){
+    if(d<0)      alerta=`<span class="badge b-red">atrasado ${Math.abs(d)}d</span>`;
+    else if(d===0) alerta=`<span class="badge b-ok">retornar hoje</span>`;
+    else if(d<=3)  alerta=`<span class="badge b-am">em ${d}d</span>`;
+    else           alerta=`<span class="badge">${fmtData(c.data_retorno)}</span>`;
+  }
+  return `<article class="cli ${cls}">
+    <div class="cli-top">
+      <div style="min-width:0">
+        <div class="cli-nome">${esc(c.nome)}</div>
+        <div class="cli-meta">${esc(c.origem||'—')}${c.cidade?' · '+esc(c.cidade):''}</div>
+      </div>
+      <span class="badge ${et.c}">${et.n}</span>
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">${alerta}
+      ${c.forma_pagto?`<span class="badge">${esc(c.forma_pagto)}</span>`:''}
+      ${c.tem_troca?'<span class="badge">com troca</span>':''}</div>
+    ${nomeV?`<div class="cli-row"><span class="l">Interesse</span><span>${esc(nomeV)}</span></div>`:''}
+    ${c.proximo_passo?`<div class="cli-row"><span class="l">Próximo</span><span>${esc(c.proximo_passo)}</span></div>`:''}
+    ${c.obs?`<div class="cli-obs">${esc(c.obs)}</div>`:''}
+    <div class="cli-acoes">
+      ${wa?`<a class="btn btn-sm btn-wa" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>`:''}
+      <button class="btn btn-sm" onclick="cEditar(${c.id})">Abrir</button>
+      <button class="btn btn-sm" onclick="iAbrir(${c.id})">Histórico</button>
+      ${ativo?`<button class="btn btn-sm" onclick="cAvancar(${c.id})">Avançar etapa</button>`:''}
+    </div>
+  </article>`;
+}
+
+function msgRetorno(c){
+  const nome=(c.nome||'').split(' ')[0];
+  const v=c.veiculo_nome || '';
+  const vend=CFG.vendedor_nome||'';
+  let m=`Oi ${nome}, tudo bem? Aqui é ${vend} da BYD Parvi Olinda.`;
+  if(v) m+=` Passando para falar do ${v}.`;
+  if(c.proximo_passo) m+=` ${c.proximo_passo}`;
+  return m;
+}
+
+let cEditId=null;
+function cNovo(){
+  cEditId=null;
+  document.getElementById('c-modal-tit').textContent='Novo cliente';
+  ['c-nome','c-wpp','c-cidade','c-entrada','c-passo','c-obs','c-trocad'].forEach(i=>document.getElementById(i).value='');
+  ['c-origemf','c-pagto','c-perfil','c-perda'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('c-veic').value='';
+  document.getElementById('c-etapa').value='novo';
+  document.getElementById('c-cidade').value='Olinda';
+  document.getElementById('c-retorno').value=hojeISO();
+  document.getElementById('c-garagem').checked=false;
+  document.getElementById('c-troca').checked=false;
+  document.getElementById('c-troca-wrap').style.display='none';
+  document.getElementById('c-perda-wrap').style.display='none';
+  document.getElementById('c-btn-del').style.display='none';
+  document.getElementById('c-modal').style.display='flex';
+  setTimeout(()=>document.getElementById('c-nome').focus(),80);
+}
+function cEditar(id){
+  const c=CLIENTES.find(x=>String(x.id)===String(id)); if(!c) return;
+  cEditId=c.id;
+  document.getElementById('c-modal-tit').textContent=c.nome;
+  document.getElementById('c-nome').value=c.nome||'';
+  document.getElementById('c-wpp').value=c.whatsapp||'';
+  document.getElementById('c-cidade').value=c.cidade||'';
+  document.getElementById('c-origemf').value=c.origem||'';
+  document.getElementById('c-etapa').value=c.etapa||'novo';
+  document.getElementById('c-veic').value=c.veiculo_id||'';
+  document.getElementById('c-pagto').value=c.forma_pagto||'';
+  document.getElementById('c-entrada').value=c.entrada||'';
+  document.getElementById('c-perfil').value=c.perfil_uso||'';
+  document.getElementById('c-retorno').value=c.data_retorno?String(c.data_retorno).slice(0,10):'';
+  document.getElementById('c-passo').value=c.proximo_passo||'';
+  document.getElementById('c-obs').value=c.obs||'';
+  document.getElementById('c-garagem').checked=!!c.tem_garagem;
+  document.getElementById('c-troca').checked=!!c.tem_troca;
+  document.getElementById('c-trocad').value=c.troca_desc||'';
+  document.getElementById('c-troca-wrap').style.display=c.tem_troca?'':'none';
+  document.getElementById('c-perda').value=c.motivo_perda||'';
+  document.getElementById('c-perda-wrap').style.display=c.etapa==='perdido'?'':'none';
+  document.getElementById('c-btn-del').style.display='';
+  document.getElementById('c-modal').style.display='flex';
+}
+function cFechar(){ document.getElementById('c-modal').style.display='none'; }
+function cToggleTroca(){
+  document.getElementById('c-troca-wrap').style.display =
+    document.getElementById('c-troca').checked ? '' : 'none';
+}
+async function cSalvar(){
+  const nome=document.getElementById('c-nome').value.trim();
+  if(!nome){ toast('Preencha o nome do cliente.','err'); return; }
+  const vid=document.getElementById('c-veic').value||null;
+  const v=VEICULOS.find(x=>String(x.id)===String(vid));
+  const d={
+    nome,
+    whatsapp: soNum(document.getElementById('c-wpp').value)||null,
+    cidade: document.getElementById('c-cidade').value.trim()||null,
+    origem: document.getElementById('c-origemf').value||null,
+    etapa: document.getElementById('c-etapa').value,
+    veiculo_id: vid?Number(vid):null,
+    veiculo_nome: v?nomeVeic(v):null,
+    forma_pagto: document.getElementById('c-pagto').value||null,
+    entrada: Number(document.getElementById('c-entrada').value)||null,
+    perfil_uso: document.getElementById('c-perfil').value||null,
+    data_retorno: document.getElementById('c-retorno').value||null,
+    proximo_passo: document.getElementById('c-passo').value.trim()||null,
+    obs: document.getElementById('c-obs').value.trim()||null,
+    tem_garagem: document.getElementById('c-garagem').checked,
+    tem_troca: document.getElementById('c-troca').checked,
+    troca_desc: document.getElementById('c-trocad').value.trim()||null,
+    motivo_perda: document.getElementById('c-etapa').value==='perdido'
+      ? (document.getElementById('c-perda').value||null) : null,
+    valor_negocio: v?Number(v.preco||0):null,
+    atualizado_em: new Date().toISOString()
+  };
+  try{
+    if(cEditId){
+      const r=await dbUpdate('bp_clientes', cEditId, d);
+      const i=CLIENTES.findIndex(x=>String(x.id)===String(cEditId));
+      if(i>=0) CLIENTES[i]=r[0]||{...CLIENTES[i],...d};
+      toast('Cliente atualizado.','ok');
+    }else{
+      const r=await dbInsert('bp_clientes', d);
+      CLIENTES.unshift(r[0]||d);
+      toast('Cliente cadastrado.','ok');
+    }
+    cFechar(); badges(); setTab(abaAtual, document.querySelector('.nav-item.active'));
+  }catch(e){ erroLegivel(e,'salvar o cliente'); }
+}
+async function cExcluir(){
+  if(!cEditId) return;
+  if(!confirm('Excluir este cliente e todo o histórico dele? Não dá para desfazer.')) return;
+  try{
+    await dbDelete('bp_clientes', cEditId);
+    CLIENTES=CLIENTES.filter(x=>String(x.id)!==String(cEditId));
+    cFechar(); badges(); cRender(); toast('Cliente excluído.','ok');
+  }catch(e){ erroLegivel(e,'excluir o cliente'); }
+}
+async function cAvancar(id){
+  const c=CLIENTES.find(x=>String(x.id)===String(id)); if(!c) return;
+  const ordem=['novo','contato','test_drive','proposta','fechado'];
+  const i=ordem.indexOf(c.etapa);
+  const nova = i<0 ? 'contato' : ordem[Math.min(i+1, ordem.length-1)];
+  if(nova===c.etapa){ toast('Já está na última etapa.'); return; }
+  try{
+    await dbUpdate('bp_clientes', id, {etapa:nova, atualizado_em:new Date().toISOString()});
+    c.etapa=nova;
+    toast('Agora está em: '+etapaInfo(nova).n,'ok');
+    badges(); setTab(abaAtual, document.querySelector('.nav-item.active'));
+  }catch(e){ erroLegivel(e,'mudar a etapa'); }
+}
+
+/* =========================================================
+   MODULO INTERACOES
+   ========================================================= */
+let iCliId=null;
+async function iAbrir(id){
+  iCliId=id;
+  const c=CLIENTES.find(x=>String(x.id)===String(id));
+  document.getElementById('i-tit').textContent='Histórico · '+(c?c.nome:'');
+  document.getElementById('i-resumo').value='';
+  document.getElementById('i-lista').innerHTML='<div class="empty"><p>Carregando…</p></div>';
+  document.getElementById('i-modal').style.display='flex';
+  iCarregar();
+}
+function iFechar(){ document.getElementById('i-modal').style.display='none'; }
+async function iCarregar(){
+  const l=await dbGetSafe('bp_interacoes', `&cliente_id=eq.${iCliId}&order=id.desc`);
+  const el=document.getElementById('i-lista');
+  if(!l.length){ el.innerHTML='<div class="empty"><p>Nenhum contato registrado ainda.</p></div>'; return; }
+  el.innerHTML=l.map(r=>`<div style="padding:.6rem 0;border-bottom:1px solid var(--border)">
+    <div style="display:flex;justify-content:space-between;gap:8px">
+      <span class="badge b-ac">${esc(r.tipo||'—')}</span>
+      <span style="font-size:11.5px;color:var(--text3)">${fmtData(r.criado_em)}</span>
+    </div>
+    <div style="font-size:13px;margin-top:5px">${esc(r.resumo||'')}</div>
+  </div>`).join('');
+}
+async function iSalvar(){
+  const resumo=document.getElementById('i-resumo').value.trim();
+  if(!resumo){ toast('Escreva o que aconteceu.','err'); return; }
+  try{
+    await dbInsert('bp_interacoes',{cliente_id:iCliId, tipo:document.getElementById('i-tipo').value, resumo});
+    document.getElementById('i-resumo').value='';
+    iCarregar(); toast('Contato registrado.','ok');
+  }catch(e){ erroLegivel(e,'registrar o contato'); }
+}
+
+/* =========================================================
+   MODULO CATALOGO
+   ========================================================= */
+function vRender(){
+  const busca=(document.getElementById('v-busca').value||'').toLowerCase().trim();
+  const tec=document.getElementById('v-tec').value;
+  const l=VEICULOS.filter(v=>{
+    if(v.ativo===false) return false;
+    if(tec && v.tecnologia!==tec) return false;
+    if(busca && !nomeVeic(v).toLowerCase().includes(busca) && !String(v.segmento||'').toLowerCase().includes(busca)) return false;
+    return true;
+  });
+  const el=document.getElementById('v-lista');
+  if(!l.length){
+    el.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="ic">🚗</div>
+      <h3>Catálogo vazio</h3><p>Rode o SQL de seed ou cadastre um veículo na mão.</p>
+      <button class="btn btn-dark" style="margin-top:1rem" onclick="vNovo()">Cadastrar veículo</button></div>`;
+    return;
+  }
+  el.innerHTML=l.map(v=>{
+    const dest=(v.destaques||'').split('\n').filter(Boolean).slice(0,3);
+    return `<article class="veic">
+      ${v.foto?`<img class="veic-foto" src="${esc(v.foto)}" alt="${esc(nomeVeic(v))}" loading="lazy">`
+             :`<div class="veic-foto-vazia">⚡</div>`}
+      <div class="veic-body">
+        <div class="veic-nome">${esc(nomeVeic(v))}</div>
+        <div class="veic-preco">${v.preco?brl(v.preco):'preço a confirmar'}</div>
+        <div class="veic-specs">
+          <span class="badge ${v.tecnologia==='BEV'?'b-ok':'b-am'}">${esc(v.tecnologia||'—')}</span>
+          ${v.segmento?`<span class="badge">${esc(v.segmento)}</span>`:''}
+          ${v.autonomia_km?`<span class="badge b-ac">${v.autonomia_km} km</span>`:''}
+          ${v.potencia_cv?`<span class="badge">${v.potencia_cv} cv</span>`:''}
+          ${v.estoque>0?`<span class="badge b-ok">${v.estoque} em estoque</span>`:''}
+        </div>
+        ${dest.length?`<ul style="font-size:12.5px;color:var(--text2);padding-left:1.05rem;margin-top:3px;line-height:1.6">
+          ${dest.map(d=>`<li>${esc(d)}</li>`).join('')}</ul>`:''}
+        <div class="veic-acoes">
+          <button class="btn btn-sm" onclick="vEditar(${v.id})">Editar</button>
+          <button class="btn btn-sm" onclick="qAbrir(${v.id})">QR da ficha</button>
+          <button class="btn btn-sm btn-dark" onclick="setTabSim(${v.id})">Economia</button>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+function setTabSim(id){
+  const btns=[...document.querySelectorAll('.nav-item')];
+  setTab('simulador', btns.find(b=>b.getAttribute('onclick').includes("'simulador'")));
+  const s=document.getElementById('s-veic');
+  s.value=String(id); sCalc();
+}
+
+let vEditId=null, vFotoData=null;
+function vNovo(){
+  vEditId=null; vFotoData=null;
+  document.getElementById('v-modal-tit').textContent='Novo veículo';
+  ['v-modelo','v-versao','v-seg','v-preco','v-estoque','v-aut','v-pot','v-bat','v-cons','v-cores','v-dest']
+    .forEach(i=>document.getElementById(i).value='');
+  document.getElementById('v-tecf').value='BEV';
+  document.getElementById('v-foto-prev').innerHTML='';
+  document.getElementById('v-modal').style.display='flex';
+}
+function vEditar(id){
+  const v=VEICULOS.find(x=>String(x.id)===String(id)); if(!v) return;
+  vEditId=v.id; vFotoData=v.foto||null;
+  document.getElementById('v-modal-tit').textContent=nomeVeic(v);
+  document.getElementById('v-modelo').value=v.modelo||'';
+  document.getElementById('v-versao').value=v.versao||'';
+  document.getElementById('v-seg').value=v.segmento||'';
+  document.getElementById('v-tecf').value=v.tecnologia||'BEV';
+  document.getElementById('v-preco').value=v.preco||'';
+  document.getElementById('v-estoque').value=v.estoque||0;
+  document.getElementById('v-aut').value=v.autonomia_km||'';
+  document.getElementById('v-pot').value=v.potencia_cv||'';
+  document.getElementById('v-bat').value=v.bateria_kwh||'';
+  document.getElementById('v-cons').value=v.consumo_kwh100||'';
+  document.getElementById('v-cores').value=v.cores||'';
+  document.getElementById('v-dest').value=v.destaques||'';
+  document.getElementById('v-foto-prev').innerHTML = v.foto
+    ? `<img src="${esc(v.foto)}" style="width:100%;border-radius:10px">` : '';
+  document.getElementById('v-modal').style.display='flex';
+}
+function vFechar(){ document.getElementById('v-modal').style.display='none'; }
+function vFoto(inp){
+  const f=inp.files&&inp.files[0]; if(!f) return;
+  comprimir(f, d=>{
+    vFotoData=d;
+    document.getElementById('v-foto-prev').innerHTML=`<img src="${d}" style="width:100%;border-radius:10px">`;
+  });
+}
+async function vSalvar(){
+  const modelo=document.getElementById('v-modelo').value.trim();
+  if(!modelo){ toast('Preencha o modelo.','err'); return; }
+  const versao=document.getElementById('v-versao').value.trim();
+  const d={
+    modelo, versao: versao||null,
+    segmento: document.getElementById('v-seg').value.trim()||null,
+    tecnologia: document.getElementById('v-tecf').value,
+    preco: Number(document.getElementById('v-preco').value)||null,
+    estoque: Number(document.getElementById('v-estoque').value)||0,
+    autonomia_km: Number(document.getElementById('v-aut').value)||null,
+    potencia_cv: Number(document.getElementById('v-pot').value)||null,
+    bateria_kwh: Number(document.getElementById('v-bat').value)||null,
+    consumo_kwh100: Number(document.getElementById('v-cons').value)||null,
+    cores: document.getElementById('v-cores').value.trim()||null,
+    destaques: document.getElementById('v-dest').value.trim()||null,
+    foto: vFotoData||null,
+    slug: slugify(modelo+'-'+versao) || slugify(modelo),
+    ativo: true
+  };
+  try{
+    if(vEditId){
+      const r=await dbUpdate('bp_veiculos', vEditId, d);
+      const i=VEICULOS.findIndex(x=>String(x.id)===String(vEditId));
+      if(i>=0) VEICULOS[i]=r[0]||{...VEICULOS[i],...d};
+      toast('Veículo atualizado.','ok');
+    }else{
+      const r=await dbInsert('bp_veiculos', d);
+      VEICULOS.push(r[0]||d);
+      toast('Veículo cadastrado.','ok');
+    }
+    vFechar(); popularSelects(); badges(); vRender();
+  }catch(e){ erroLegivel(e,'salvar o veículo'); }
+}
+
+/* ---------- QR da ficha pública ---------- */
+function urlFicha(v){
+  const base=location.href.replace(/\/[^\/]*$/,'/');
+  return base+'veiculo.html?v='+encodeURIComponent(v.slug||v.id)
+       + (CFG.vendedor_wpp?('&w='+soNum(CFG.vendedor_wpp)):'')
+       + (CFG.vendedor_nome?('&n='+encodeURIComponent(CFG.vendedor_nome)):'');
+}
+function qAbrir(id){
+  const v=VEICULOS.find(x=>String(x.id)===String(id)); if(!v) return;
+  const url=urlFicha(v);
+  document.getElementById('q-link').textContent=url;
+  const box=document.getElementById('q-code'); box.innerHTML='';
+  try{
+    new QRCode(box,{text:url,width:210,height:210,correctLevel:QRCode.CorrectLevel.M});
+    // qrcodejs desenha em canvas; converte para <img> para funcionar em captura e long-press no iOS
+    setTimeout(()=>{
+      const cv=box.querySelector('canvas');
+      if(cv){ const img=new Image(); img.src=cv.toDataURL('image/png'); img.width=210; box.innerHTML=''; box.appendChild(img); }
+    },120);
+  }catch(e){ box.innerHTML='<p style="font-size:12.5px;color:var(--text2)">Não deu para gerar o QR. Use o link abaixo.</p>'; }
+  document.getElementById('q-modal').style.display='flex';
+}
+function qFechar(){ document.getElementById('q-modal').style.display='none'; }
+function qCopiar(){
+  const t=document.getElementById('q-link').textContent;
+  navigator.clipboard?.writeText(t).then(()=>toast('Link copiado.','ok'), ()=>toast('Copie manualmente.','err'));
+}
+
+/* =========================================================
+   MODULO SIMULADOR DE ECONOMIA
+   ========================================================= */
+function sInit(){
+  const s=document.getElementById('s-veic');
+  const atual=s.value;
+  s.innerHTML='<option value="">Comparação genérica</option>'+
+    VEICULOS.filter(v=>v.ativo!==false).map(v=>`<option value="${v.id}">${esc(nomeVeic(v))}</option>`).join('');
+  if(atual) s.value=atual;
+  if(CFG.tarfa_kwh) document.getElementById('s-tar').value=CFG.tarfa_kwh;
+  if(CFG.tarifa_kwh) document.getElementById('s-tar').value=CFG.tarifa_kwh;
+  if(CFG.preco_gasolina) document.getElementById('s-gas').value=CFG.preco_gasolina;
+  if(CFG.consumo_gasolina) document.getElementById('s-cons').value=CFG.consumo_gasolina;
+  sCalc();
+}
+let sUltimo=null;
+function sCalc(){
+  const v=VEICULOS.find(x=>String(x.id)===document.getElementById('s-veic').value);
+  if(v && v.consumo_kwh100) document.getElementById('s-kwh').value=v.consumo_kwh100;
+
+  const km   = Math.max(0, Number(document.getElementById('s-km').value)||0);
+  const kwh  = Math.max(0.1, Number(document.getElementById('s-kwh').value)||13);
+  const tar  = Math.max(0, Number(document.getElementById('s-tar').value)||0);
+  const cons = Math.max(0.1, Number(document.getElementById('s-cons').value)||11);
+  const gas  = Math.max(0, Number(document.getElementById('s-gas').value)||0);
+  const ipva = Math.max(0, Number(document.getElementById('s-ipva').value)||0);
+
+  const custoEle = km*(kwh/100)*tar;
+  const custoGas = (km/cons)*gas;
+  const ecoMes   = custoGas-custoEle;
+  const porKmE   = (kwh/100)*tar;
+  const porKmG   = gas/cons;
+
+  document.getElementById('s-eco').textContent = brl2(Math.max(0,ecoMes));
+  document.getElementById('s-cap').textContent = ecoMes>=0
+    ? 'economia por mês só em combustível'
+    : 'nesse cenário o elétrico sai mais caro em energia';
+
+  // Híbrido plug-in não roda 100% elétrico: essa conta é o teto, não a média.
+  const av=document.getElementById('s-phev');
+  if(v && v.tecnologia==='PHEV'){
+    av.style.display='';
+    av.textContent='Este é um híbrido plug-in. Essa conta vale se o cliente carregar todo dia e '
+      +'rodar quase tudo no modo elétrico. Se ele fizer viagem longa ou não carregar, a economia real '
+      +'fica menor. Prometer esse valor cheio queima a confiança na entrega.';
+  } else {
+    av.style.display='none';
+  }
+
+  document.getElementById('s-det').innerHTML=`
+    <div class="sim-lin"><span>Recarga do ${v?esc(nomeVeic(v)):'BYD'}</span><b>${brl2(custoEle)}/mês</b></div>
+    <div class="sim-lin"><span>Gasolina do carro atual</span><b>${brl2(custoGas)}/mês</b></div>
+    <div class="sim-lin"><span>Custo por km · elétrico</span><b>${brl2(porKmE)}</b></div>
+    <div class="sim-lin"><span>Custo por km · gasolina</span><b>${brl2(porKmG)}</b></div>
+    ${ipva>0?`<div class="sim-lin"><span>IPVA que deixa de pagar</span><b>${brl2(ipva/12)}/mês</b></div>`:''}
+    <div class="sim-lin"><span>Energia usada por mês</span><b>${(km*kwh/100).toFixed(0)} kWh</b></div>`;
+
+  const anos=[1,3,5];
+  document.getElementById('s-tab').innerHTML=
+    '<thead><tr><th>Período</th><th>Combustível</th><th>Com IPVA</th><th>Km rodados</th></tr></thead><tbody>'+
+    anos.map(a=>{
+      const e=ecoMes*12*a, t=e+ipva*a;
+      return `<tr><td>${a} ano${a>1?'s':''}</td><td>${brl(e)}</td><td><b>${brl(t)}</b></td><td>${(km*12*a).toLocaleString('pt-BR')} km</td></tr>`;
+    }).join('')+'</tbody>';
+
+  sUltimo={v,km,ecoMes,ipva,custoEle,custoGas};
+}
+function sEnviarWhats(){
+  if(!sUltimo){ toast('Faça a simulação primeiro.','err'); return; }
+  const {v,km,ecoMes,ipva,custoEle,custoGas}=sUltimo;
+  const l=[
+    v?`Comparativo · ${nomeVeic(v)}`:'Comparativo elétrico x gasolina',
+    `Rodando ${km.toLocaleString('pt-BR')} km por mês:`,
+    `• Recarga: ${brl2(custoEle)}/mês`,
+    `• Gasolina hoje: ${brl2(custoGas)}/mês`,
+    `• Diferença: ${brl2(Math.max(0,ecoMes))} por mês`,
+    `• Em 5 anos: ${brl(ecoMes*60 + ipva*5)}`,
+    '',
+    `${CFG.vendedor_nome||''} · BYD Parvi Olinda`
+  ].filter(x=>x!==null);
+  const txt=l.join('\n');
+  if(navigator.share){ navigator.share({text:txt}).catch(()=>{}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');
+}
+
+/* =========================================================
+   MODULO ARGUMENTOS — objeções de venda de elétrico
+   Os [colchetes] são dados que você confirma com a Parvi
+   antes de usar. Não invente número na frente do cliente.
+   ========================================================= */
+const ARGS=[
+  {o:'"E se a bateria acabar no meio da estrada?"',
+   p:'Medo de ficar na mão. Quase sempre é ansiedade, não cálculo.',
+   r:'Pergunte quantos km ele roda por dia. Na prática quase todo mundo faz menos de 50 km. Mostre que ele sai de casa com o tanque cheio todo dia, coisa que o carro a gasolina nunca deu. Para viagem, mapeie com ele a rota que ele realmente faz e mostre os pontos de recarga no caminho.',
+   t:'Confirme a autonomia real do modelo no material da BYD e os eletropostos da rota Recife–Caruaru / Recife–João Pessoa.'},
+
+  {o:'"Moro em apartamento, não tenho onde carregar"',
+   p:'Objeção real, não é desculpa. Precisa de solução concreta.',
+   r:'Separe três caminhos: tomada comum da vaga (lenta, mas resolve quem roda pouco), wallbox aprovado em assembleia, ou recarga pública perto de casa e do trabalho. Mostre o custo e o tempo de cada um. Se nenhum resolver, o híbrido plug-in é a resposta honesta.',
+   t:'Levante o que a BYD entrega de carregador junto com o carro e o custo médio de instalação em Recife.'},
+
+  {o:'"Carro chinês desvaloriza demais"',
+   p:'Ele está pensando na revenda, ou seja, já está imaginando ter o carro.',
+   r:'Não fuja: fale de valor de revenda com números de mercado, não com opinião. Traga o programa de recompra da própria BYD se houver um vigente. E recoloque a conta no total de propriedade: a economia de combustível e manutenção em 4 anos entra na conta da depreciação.',
+   t:'Puxe a tabela FIPE do Dolphin Mini e do Dolphin de 2 anos atrás e a condição de recompra vigente.'},
+
+  {o:'"Quanto dura a bateria? Trocar deve custar uma fortuna"',
+   p:'Está calculando um risco de longo prazo que não sabe dimensionar.',
+   r:'Fale de garantia, não de estimativa. Diga o prazo e a quilometragem exatos da garantia da bateria e o que ela cobre. Explique que a degradação é gradual, não um apagão.',
+   t:'Decore o prazo exato da garantia de bateria da BYD no Brasil e o que cobre. Errar isso queima a venda.'},
+
+  {o:'"Por esse preço eu compro um [modelo a combustão]"',
+   p:'Está comparando preço de etiqueta, não custo de uso.',
+   r:'Aceite a comparação e mude a régua. Abra o simulador de economia na frente dele com o km que ele mesmo informou. Some combustível, manutenção e IPVA. Mostre a diferença em 4 anos, que é o tempo médio que ele fica com o carro.',
+   t:'Use a aba Economia com os números dele, não com números redondos.'},
+
+  {o:'"Vou esperar o preço baixar"',
+   p:'Não é preço, é falta de urgência ou dúvida não resolvida.',
+   r:'Pergunte direto: se o preço fosse o de hoje daqui a seis meses, você levaria agora? Se sim, é preço e dá para trabalhar condição. Se não, existe outra objeção escondida — ache ela antes de dar desconto.',
+   t:'Se houver campanha com prazo, o prazo é o argumento. Confirme a data de validade.'},
+
+  {o:'"Tem oficina? E peça, demora?"',
+   p:'Medo de ficar sem o carro e sem suporte.',
+   r:'Fale da rede: quantas concessionárias no estado, onde fica a oficina que vai atender ele, prazo de revisão. Elétrico tem muito menos item de manutenção — sem óleo, sem correia, sem embreagem, freio dura mais por causa da regeneração.',
+   t:'Saiba o endereço da oficina que atende Olinda e o intervalo de revisão do modelo.'},
+
+  {o:'"E se alagar? Aqui em Recife alaga"',
+   p:'Objeção muito local e muito legítima. Quem responde bem ganha confiança.',
+   r:'Não minimize. Explique o índice de proteção da bateria e o que a fabricante declara sobre travessia de água, sem exagerar. Depois trate como trataria qualquer carro: alagamento é sinistro de seguro, e a cobertura vale igual.',
+   t:'Confirme no manual o que a BYD declara sobre profundidade de água. Não improvise esse número.'},
+
+  {o:'"Seguro de elétrico é muito caro"',
+   p:'Ouviu falar, não cotou.',
+   r:'Não discuta — cote. Peça a placa do carro atual e o perfil dele e traga a cotação real na próxima conversa. Isso vira um motivo legítimo de retorno.',
+   t:'Tenha um contato de corretor que cote elétrico rápido. Vira sua vantagem no follow-up.'},
+
+  {o:'"Preciso falar com minha esposa / meu sócio"',
+   p:'Ou é verdade, ou é saída educada.',
+   r:'Trate como verdade e facilite: proponha trazer os dois para o test-drive, marque dia e hora ali mesmo. Se ele se esquiva de marcar, a objeção era outra. Pergunte com calma o que ainda está travando.',
+   t:'Nunca deixe sair sem data de retorno marcada. É isso que alimenta a aba Hoje.'}
+];
+function aRender(){
+  const b=(document.getElementById('a-busca').value||'').toLowerCase().trim();
+  const l=ARGS.filter(a=>!b || (a.o+a.p+a.r+a.t).toLowerCase().includes(b));
+  const el=document.getElementById('a-lista');
+  if(!l.length){ el.innerHTML='<div class="empty" style="grid-column:1/-1"><p>Nenhuma objeção encontrada.</p></div>'; return; }
+  el.innerHTML=l.map(a=>`<article class="card" style="display:flex;flex-direction:column;gap:9px">
+    <div style="font-size:14px;font-weight:700;letter-spacing:-.01em">${esc(a.o)}</div>
+    <div style="font-size:12.5px;color:var(--text3);line-height:1.55">${esc(a.p)}</div>
+    <div style="font-size:13px;line-height:1.6">${esc(a.r)}</div>
+    <div style="font-size:12px;background:var(--accent-bg);color:var(--accent-text);
+      border-radius:9px;padding:.6rem .7rem;line-height:1.55;font-weight:500">${esc(a.t)}</div>
+  </article>`).join('');
+}
+
+/* =========================================================
+   MODULO FUNIL
+   ========================================================= */
+function barras(dados, total){
+  const ks=Object.keys(dados).sort((a,b)=>dados[b]-dados[a]);
+  if(!ks.length) return '<p style="font-size:12.5px;color:var(--text3)">Sem dados ainda.</p>';
+  return ks.map(k=>{
+    const n=dados[k], pc=total?Math.round(n*100/total):0;
+    return `<div style="margin-bottom:.6rem">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px">
+        <span>${esc(k)}</span><span style="color:var(--text3)"><b style="color:var(--text)">${n}</b> · ${pc}%</span></div>
+      <div style="height:7px;background:var(--surface3);border-radius:99px;overflow:hidden">
+        <div style="height:100%;width:${pc}%;background:var(--accent);border-radius:99px"></div></div>
+    </div>`;
+  }).join('');
+}
+function fRender(){
+  const t=CLIENTES.length;
+  const fechados=CLIENTES.filter(c=>c.etapa==='fechado');
+  const perdidos=CLIENTES.filter(c=>c.etapa==='perdido');
+  const decid=fechados.length+perdidos.length;
+  const conv=decid?Math.round(fechados.length*100/decid):0;
+  const fat=fechados.reduce((s,c)=>s+Number(c.valor_negocio||precoDoCliente(c)||0),0);
+
+  document.getElementById('f-kpis').innerHTML=`
+    <div class="kpi ac"><div class="v">${t}</div><div class="l">Clientes na base</div></div>
+    <div class="kpi ok"><div class="v">${fechados.length}</div><div class="l">Fechados</div></div>
+    <div class="kpi"><div class="v">${conv}%</div><div class="l">Conversão</div></div>
+    <div class="kpi ok"><div class="v">${brl(fat)}</div><div class="l">Vendido</div></div>`;
+
+  const etp={}; ETAPAS.forEach(e=>{ const n=CLIENTES.filter(c=>c.etapa===e.k).length; if(n) etp[e.n]=n; });
+  document.getElementById('f-barras').innerHTML=barras(etp,t);
+
+  const org={}; CLIENTES.forEach(c=>{ const k=c.origem||'Não informado'; org[k]=(org[k]||0)+1; });
+  document.getElementById('f-origem').innerHTML=barras(org,t);
+
+  const mod={}; CLIENTES.forEach(c=>{ if(c.veiculo_nome) mod[c.veiculo_nome]=(mod[c.veiculo_nome]||0)+1; });
+  document.getElementById('f-modelo').innerHTML=barras(mod,Object.values(mod).reduce((a,b)=>a+b,0));
+
+  const per={}; perdidos.forEach(c=>{ const k=c.motivo_perda||'Não informado'; per[k]=(per[k]||0)+1; });
+  document.getElementById('f-perda').innerHTML=barras(per,perdidos.length);
+}
+
+/* =========================================================
+   MODULO CONFIG
+   ========================================================= */
+function cfgRender(){
+  document.getElementById('cfg-nome').value=CFG.vendedor_nome||'';
+  document.getElementById('cfg-wpp').value =CFG.vendedor_wpp||'';
+  document.getElementById('cfg-loja').value=CFG.loja_nome||'';
+  document.getElementById('cfg-url').textContent=SUPA_URL.replace('https://','');
+}
+async function cfgSalvar(){
+  const pares={
+    vendedor_nome: document.getElementById('cfg-nome').value.trim(),
+    vendedor_wpp:  soNum(document.getElementById('cfg-wpp').value),
+    loja_nome:     document.getElementById('cfg-loja').value.trim()
+  };
+  try{
+    for(const [k,v] of Object.entries(pares)){
+      const ex=await dbGetSafe('bp_config', `&chave=eq.${encodeURIComponent(k)}`);
+      if(ex.length) await dbUpdate('bp_config', ex[0].id, {valor:v});
+      else          await dbInsert('bp_config', {chave:k, valor:v});
+      CFG[k]=v;
+    }
+    document.getElementById('sb-vend').textContent='👤 '+(CFG.vendedor_nome||'—');
+    document.getElementById('sb-loja').textContent=CFG.loja_nome||'BYD Parvi Olinda';
+    toast('Ajustes salvos.','ok');
+  }catch(e){ erroLegivel(e,'salvar os ajustes'); }
+}
+
+
+/* ---------- GERADOR DA FICHA PUBLICA ----------
+   O veiculo.html vive aqui dentro em base64. O painel troca a
+   conexao e o WhatsApp e devolve o arquivo pronto para subir,
+   para voce nunca precisar abrir HTML num editor de texto. */
+const FICHA_B64='PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9InB0LUJSIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCxpbml0aWFsLXNjYWxlPTEuMCx2aWV3cG9ydC1maXQ9Y292ZXIiPgo8bWV0YSBuYW1lPSJ0aGVtZS1jb2xvciIgY29udGVudD0iIzJGODdDOCI+CjxtZXRhIG5hbWU9ImFwcGxlLW1vYmlsZS13ZWItYXBwLWNhcGFibGUiIGNvbnRlbnQ9InllcyI+Cjx0aXRsZT5CWUQgUGFydmkgT2xpbmRhPC90aXRsZT4KPGxpbmsgcmVsPSJwcmVjb25uZWN0IiBocmVmPSJodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tIj4KPGxpbmsgcmVsPSJwcmVjb25uZWN0IiBocmVmPSJodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tIiBjcm9zc29yaWdpbj4KPGxpbmsgaHJlZj0iaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1JbnRlcjp3Z2h0QDQwMDs1MDA7NjAwOzcwMDs4MDAmZGlzcGxheT1zd2FwIiByZWw9InN0eWxlc2hlZXQiPgo8c3R5bGU+Cjpyb290ey0tYXo6IzJGODdDODstLWF6MjojNEU5RkQ2Oy0tdHh0OiMwYjIyMzc7LS10eHQyOiM0YTYyODA7LS10eHQzOiM4ZmEzYmI7CiAgLS1iZzojZmZmOy0tc2Y6I2YyZjdmYzstLWxuOiNkZmU4ZjM7LS1vazojMTU4MDNkfQoqe2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjA7LXdlYmtpdC10YXAtaGlnaGxpZ2h0LWNvbG9yOnRyYW5zcGFyZW50fQpib2R5e2ZvbnQtZmFtaWx5OidJbnRlcicsLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsc2Fucy1zZXJpZjtiYWNrZ3JvdW5kOnZhcigtLWJnKTsKICBjb2xvcjp2YXIoLS10eHQpO2ZvbnQtc2l6ZToxNXB4O2xpbmUtaGVpZ2h0OjEuNTU7LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0OjEwMCU7cGFkZGluZy1ib3R0b206MTA0cHh9Ci53cmFwe21heC13aWR0aDo1NjBweDttYXJnaW46MCBhdXRvO3BhZGRpbmc6MCAxOHB4fQoKLnRvcHtiYWNrZ3JvdW5kOmxpbmVhci1ncmFkaWVudCgxNjBkZWcsdmFyKC0tYXopLHZhcigtLWF6MikpO2NvbG9yOiNmZmY7CiAgcGFkZGluZzpjYWxjKDIwcHggKyBlbnYoc2FmZS1hcmVhLWluc2V0LXRvcCwwcHgpKSAxOHB4IDI2cHg7dGV4dC1hbGlnbjpjZW50ZXJ9Ci5sb2Nre2Rpc3BsYXk6aW5saW5lLWZsZXg7YWxpZ24taXRlbXM6Y2VudGVyO2dhcDo5cHg7bWFyZ2luLWJvdHRvbToxNnB4fQoubG9jayBzdmd7aGVpZ2h0OjE1cHh9Ci5sb2NrIHN2ZyBwYXRoe2ZpbGw6I2ZmZn0KLmxvY2sgaXt3aWR0aDoxcHg7aGVpZ2h0OjE3cHg7YmFja2dyb3VuZDpyZ2JhKDI1NSwyNTUsMjU1LC41NSl9Ci5sb2NrIGJ7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6ODAwO2ZvbnQtc3R5bGU6aXRhbGljfQoudG9wIGgxe2ZvbnQtc2l6ZToyOXB4O2ZvbnQtd2VpZ2h0OjgwMDtsZXR0ZXItc3BhY2luZzotLjAzZW07bGluZS1oZWlnaHQ6MS4xMn0KLnRvcCAuc2Vne2ZvbnQtc2l6ZToxM3B4O29wYWNpdHk6Ljk7bWFyZ2luLXRvcDo1cHg7Zm9udC13ZWlnaHQ6NTAwfQoudG9wIC5wcmVjb3tmb250LXNpemU6MjRweDtmb250LXdlaWdodDo4MDA7bWFyZ2luLXRvcDoxNXB4O2xldHRlci1zcGFjaW5nOi0uMDJlbX0KLnRvcCAuYXBhcnR7ZGlzcGxheTpibG9jaztmb250LXNpemU6MTFweDtmb250LXdlaWdodDo2MDA7b3BhY2l0eTouODI7bGV0dGVyLXNwYWNpbmc6LjAzZW07bWFyZ2luLWJvdHRvbToxcHh9CgouZm90b3t3aWR0aDoxMDAlO2FzcGVjdC1yYXRpbzoxNi8xMDtvYmplY3QtZml0OmNvdmVyO2Rpc3BsYXk6YmxvY2t9Ci5zZW0tZm90b3t3aWR0aDoxMDAlO2FzcGVjdC1yYXRpbzoxNi8xMDtiYWNrZ3JvdW5kOnZhcigtLXNmKTtkaXNwbGF5OmZsZXg7CiAgYWxpZ24taXRlbXM6Y2VudGVyO2p1c3RpZnktY29udGVudDpjZW50ZXI7Zm9udC1zaXplOjQ4cHg7b3BhY2l0eTouNH0KCi5zcGVjc3tkaXNwbGF5OmdyaWQ7Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOnJlcGVhdChhdXRvLWZpdCxtaW5tYXgoOTBweCwxZnIpKTtnYXA6OXB4O21hcmdpbjoyMHB4IDB9Ci5zcGVje2JhY2tncm91bmQ6dmFyKC0tc2YpO2JvcmRlci1yYWRpdXM6MTNweDtwYWRkaW5nOjEzcHggMTFweDt0ZXh0LWFsaWduOmNlbnRlcn0KLnNwZWMgYntkaXNwbGF5OmJsb2NrO2ZvbnQtc2l6ZToxOXB4O2ZvbnQtd2VpZ2h0OjgwMDtjb2xvcjp2YXIoLS1heik7bGV0dGVyLXNwYWNpbmc6LS4wMmVtfQouc3BlYyBzcGFue2ZvbnQtc2l6ZToxMXB4O2NvbG9yOnZhcigtLXR4dDIpO2ZvbnQtd2VpZ2h0OjYwMH0KCmgye2ZvbnQtc2l6ZToxMi41cHg7Zm9udC13ZWlnaHQ6NzAwO2NvbG9yOnZhcigtLXR4dDMpO2xldHRlci1zcGFjaW5nOi4wNmVtO21hcmdpbjoyNHB4IDAgMTFweH0KdWwuZGVzdHtsaXN0LXN0eWxlOm5vbmV9CnVsLmRlc3QgbGl7cGFkZGluZzoxMXB4IDAgMTFweCAyN3B4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkIHZhcigtLWxuKTtwb3NpdGlvbjpyZWxhdGl2ZTtmb250LXNpemU6MTQuNXB4fQp1bC5kZXN0IGxpOmxhc3QtY2hpbGR7Ym9yZGVyLWJvdHRvbTpub25lfQp1bC5kZXN0IGxpOjpiZWZvcmV7Y29udGVudDonJztwb3NpdGlvbjphYnNvbHV0ZTtsZWZ0OjRweDt0b3A6MThweDt3aWR0aDo3cHg7aGVpZ2h0OjdweDsKICBib3JkZXItcmFkaXVzOjUwJTtiYWNrZ3JvdW5kOnZhcigtLWF6KX0KLmNvcmVze2Rpc3BsYXk6ZmxleDtmbGV4LXdyYXA6d3JhcDtnYXA6N3B4fQouY29ye2JhY2tncm91bmQ6dmFyKC0tc2YpO2JvcmRlci1yYWRpdXM6OTk5cHg7cGFkZGluZzo3cHggMTRweDtmb250LXNpemU6MTNweDtmb250LXdlaWdodDo2MDB9CgouY2FsY3tiYWNrZ3JvdW5kOnZhcigtLXNmKTtib3JkZXItcmFkaXVzOjE3cHg7cGFkZGluZzoxOHB4O21hcmdpbi10b3A6MjJweH0KLmNhbGMgaDN7Zm9udC1zaXplOjE1cHg7Zm9udC13ZWlnaHQ6NzAwO21hcmdpbi1ib3R0b206NHB4fQouY2FsYyBwe2ZvbnQtc2l6ZToxMi41cHg7Y29sb3I6dmFyKC0tdHh0Mik7bWFyZ2luLWJvdHRvbToxNHB4fQouY2FsYyBsYWJlbHtkaXNwbGF5OmJsb2NrO2ZvbnQtc2l6ZToxMS41cHg7Zm9udC13ZWlnaHQ6NzAwO2NvbG9yOnZhcigtLXR4dDIpO21hcmdpbi1ib3R0b206NXB4fQouY2FsYyBpbnB1dHt3aWR0aDoxMDAlO3BhZGRpbmc6MTJweDtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWxuKTtib3JkZXItcmFkaXVzOjExcHg7CiAgYmFja2dyb3VuZDojZmZmO2ZvbnQtc2l6ZToxNnB4O2ZvbnQtZmFtaWx5OmluaGVyaXQ7Y29sb3I6dmFyKC0tdHh0KTtvdXRsaW5lOm5vbmV9Ci5jYWxjIGlucHV0OmZvY3Vze2JvcmRlci1jb2xvcjp2YXIoLS1heil9Ci5yZXN7YmFja2dyb3VuZDp2YXIoLS1heik7Y29sb3I6I2ZmZjtib3JkZXItcmFkaXVzOjEzcHg7cGFkZGluZzoxNnB4O21hcmdpbi10b3A6MTRweDt0ZXh0LWFsaWduOmNlbnRlcn0KLnJlcyBie2Rpc3BsYXk6YmxvY2s7Zm9udC1zaXplOjMxcHg7Zm9udC13ZWlnaHQ6ODAwO2xldHRlci1zcGFjaW5nOi0uMDNlbTtsaW5lLWhlaWdodDoxLjF9Ci5yZXMgc3Bhbntmb250LXNpemU6MTIuNXB4O29wYWNpdHk6LjkzO2ZvbnQtd2VpZ2h0OjUwMH0KLnJlcyBzbWFsbHtkaXNwbGF5OmJsb2NrO2ZvbnQtc2l6ZToxMXB4O29wYWNpdHk6Ljg7bWFyZ2luLXRvcDo3cHg7bGluZS1oZWlnaHQ6MS40NX0KCi5iYXJ7cG9zaXRpb246Zml4ZWQ7bGVmdDowO3JpZ2h0OjA7Ym90dG9tOjA7cGFkZGluZzoxM3B4IDE4cHggY2FsYygxM3B4ICsgZW52KHNhZmUtYXJlYS1pbnNldC1ib3R0b20sMHB4KSk7CiAgYmFja2dyb3VuZDpsaW5lYXItZ3JhZGllbnQodG8gdG9wLCNmZmYgNzQlLHJnYmEoMjU1LDI1NSwyNTUsMCkpO3otaW5kZXg6MjB9Ci5iYXIgLmlue21heC13aWR0aDo1NjBweDttYXJnaW46MCBhdXRvfQouY3Rhe2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7anVzdGlmeS1jb250ZW50OmNlbnRlcjtnYXA6OXB4O3dpZHRoOjEwMCU7cGFkZGluZzoxN3B4OwogIGJvcmRlci1yYWRpdXM6MTVweDtiYWNrZ3JvdW5kOnZhcigtLW9rKTtjb2xvcjojZmZmO2ZvbnQtc2l6ZToxNnB4O2ZvbnQtd2VpZ2h0OjcwMDsKICB0ZXh0LWRlY29yYXRpb246bm9uZTtib3JkZXI6bm9uZTtmb250LWZhbWlseTppbmhlcml0fQouY3RhOmFjdGl2ZXt0cmFuc2Zvcm06c2NhbGUoLjk4OCl9Ci56YXB7Zm9udC1zaXplOjExLjVweDtjb2xvcjp2YXIoLS10eHQzKTt0ZXh0LWFsaWduOmNlbnRlcjttYXJnaW4tdG9wOjlweH0KLmxvYWQsLmVycm97dGV4dC1hbGlnbjpjZW50ZXI7cGFkZGluZzoyNnZoIDI0cHg7Y29sb3I6dmFyKC0tdHh0Mik7Zm9udC1zaXplOjE1cHh9Ci5wZXtmb250LXNpemU6MTFweDtjb2xvcjp2YXIoLS10eHQzKTt0ZXh0LWFsaWduOmNlbnRlcjttYXJnaW46MjZweCAwIDEwcHg7bGluZS1oZWlnaHQ6MS41fQo8L3N0eWxlPgo8L2hlYWQ+Cjxib2R5PgoKPGRpdiBpZD0ibG9hZCIgY2xhc3M9ImxvYWQiPkNhcnJlZ2FuZG/igKY8L2Rpdj4KCjxkaXYgaWQ9ImFwcCIgc3R5bGU9ImRpc3BsYXk6bm9uZSI+CiAgPGRpdiBjbGFzcz0idG9wIj4KICAgIDxkaXYgY2xhc3M9ImxvY2siPgogICAgICA8c3ZnIHZpZXdCb3g9IjAgMCAxMzIgMjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgYXJpYS1sYWJlbD0iQllEIj4KICAgICAgICA8cGF0aCBkPSJNMiAyaDIwYTcgNyAwIDAgMSAwIDEwSDl2MmgxM2E3IDcgMCAwIDEgMCAxMEgydi00aDIwYTMgMyAwIDAgMCAwLTZINVY4aDE3YTMgMyAwIDAgMCAwLTZIMlYyeiIvPgogICAgICAgIDxwYXRoIGQ9Ik00NCAyaDVsNiA5IDYtOWg1bC04LjUgMTIuNVYyNGgtNXYtOS41TDQ0IDJ6Ii8+CiAgICAgICAgPHBhdGggZD0iTTg0IDJoMTRjNy4yIDAgMTMgNC45IDEzIDExcy01LjggMTEtMTMgMTFIODRWMnptNSA0djE0aDljNC40IDAgOC0zLjEgOC03cy0zLjYtNy04LTdoLTl6Ii8+CiAgICAgIDwvc3ZnPgogICAgICA8aT48L2k+PGI+UGFydmk8L2I+CiAgICA8L2Rpdj4KICAgIDxoMSBpZD0iZi1ub21lIj7igJQ8L2gxPgogICAgPGRpdiBjbGFzcz0ic2VnIiBpZD0iZi1zZWciPjwvZGl2PgogICAgPGRpdiBjbGFzcz0icHJlY28iIGlkPSJmLXByZWNvIiBzdHlsZT0iZGlzcGxheTpub25lIj48L2Rpdj4KICA8L2Rpdj4KCiAgPGRpdiBpZD0iZi1mb3RvIj48L2Rpdj4KCiAgPGRpdiBjbGFzcz0id3JhcCI+CiAgICA8ZGl2IGNsYXNzPSJzcGVjcyIgaWQ9ImYtc3BlY3MiPjwvZGl2PgoKICAgIDxkaXYgaWQ9ImYtZGVzdC1ib3giIHN0eWxlPSJkaXNwbGF5Om5vbmUiPgogICAgICA8aDI+RGVzdGFxdWVzPC9oMj4KICAgICAgPHVsIGNsYXNzPSJkZXN0IiBpZD0iZi1kZXN0Ij48L3VsPgogICAgPC9kaXY+CgogICAgPGRpdiBpZD0iZi1jb3Jlcy1ib3giIHN0eWxlPSJkaXNwbGF5Om5vbmUiPgogICAgICA8aDI+Q29yZXM8L2gyPgogICAgICA8ZGl2IGNsYXNzPSJjb3JlcyIgaWQ9ImYtY29yZXMiPjwvZGl2PgogICAgPC9kaXY+CgogICAgPGRpdiBjbGFzcz0iY2FsYyIgaWQ9ImYtY2FsYyIgc3R5bGU9ImRpc3BsYXk6bm9uZSI+CiAgICAgIDxoMz5RdWFudG8gdm9jw6ogZWNvbm9taXphIHBvciBtw6pzPC9oMz4KICAgICAgPHA+Q29sb3F1ZSBxdWFudG9zIHF1aWzDtG1ldHJvcyB2b2PDqiByb2RhIGUgdmVqYSBhIGRpZmVyZW7Dp2EgZW50cmUgcmVjYXJyZWdhciBlIGFiYXN0ZWNlci48L3A+CiAgICAgIDxsYWJlbCBmb3I9ImttIj5RdWlsw7RtZXRyb3MgcG9yIG3DqnM8L2xhYmVsPgogICAgICA8aW5wdXQgaWQ9ImttIiB0eXBlPSJudW1iZXIiIGlucHV0bW9kZT0ibnVtZXJpYyIgdmFsdWU9IjEyMDAiIG9uaW5wdXQ9ImNhbGMoKSI+CiAgICAgIDxkaXYgY2xhc3M9InJlcyI+CiAgICAgICAgPGIgaWQ9ImVjbyI+UiQgMDwvYj4KICAgICAgICA8c3Bhbj5hIG1lbm9zIHBvciBtw6pzLCBjb21wYXJhZG8gY29tIGdhc29saW5hPC9zcGFuPgogICAgICAgIDxzbWFsbCBpZD0iYmFzZSI+PC9zbWFsbD4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KCiAgICA8cCBjbGFzcz0icGUiIGlkPSJmLW5vdGEiPgogICAgICBWYWxvcmVzIGUgZmljaGFzIHTDqWNuaWNhcyBzw6NvIGRlIHJlZmVyw6puY2lhIGUgcG9kZW0gbXVkYXIgY29uZm9ybWUgYSBjYW1wYW5oYSB2aWdlbnRlLgogICAgICBDb25maXJtZSBhcyBjb25kacOnw7VlcyBjb20gYSBsb2phLgogICAgPC9wPgogIDwvZGl2PgoKICA8ZGl2IGNsYXNzPSJiYXIiPjxkaXYgY2xhc3M9ImluIj4KICAgIDxhIGNsYXNzPSJjdGEiIGlkPSJjdGEiIGhyZWY9IiMiPkZhbGFyIGNvbSA8c3BhbiBpZD0iY3RhLW5vbWUiPmEgbG9qYTwvc3Bhbj48L2E+CiAgICA8cCBjbGFzcz0iemFwIj5CWUQgUGFydmkgwrcgT2xpbmRhLCBQZXJuYW1idWNvPC9wPgogIDwvZGl2PjwvZGl2Pgo8L2Rpdj4KCjxkaXYgaWQ9ImVycm8iIGNsYXNzPSJlcnJvIiBzdHlsZT0iZGlzcGxheTpub25lIj48L2Rpdj4KCjxzY3JpcHQ+CmNvbnN0IFNVUEFfVVJMPSdDT0xFX0FRVUlfU1VBX1VSTCc7CmNvbnN0IFNVUEFfS0VZPSdDT0xFX0FRVUlfU1VBX0NIQVZFX0FOT04nOwpmdW5jdGlvbiBIKGJlYXJlcil7CiAgY29uc3QgaD17J0NvbnRlbnQtVHlwZSc6J2FwcGxpY2F0aW9uL2pzb24nLCBhcGlrZXk6U1VQQV9LRVl9OwogIGlmKGJlYXJlcikgaC5BdXRob3JpemF0aW9uPSdCZWFyZXIgJytTVVBBX0tFWTsKICByZXR1cm4gaDsKfQoKY29uc3QgUD1uZXcgVVJMU2VhcmNoUGFyYW1zKGxvY2F0aW9uLnNlYXJjaCk7CmNvbnN0IFJFRj0oUC5nZXQoJ3YnKXx8JycpLnRyaW0oKTsKY29uc3QgV1BQPShQLmdldCgndycpfHwnJykucmVwbGFjZSgvXEQvZywnJyk7CmNvbnN0IFZFTkQ9KFAuZ2V0KCduJyl8fCcnKS50cmltKCk7CgovLyBQYXJhbWV0cm9zIGRvIGNvbXBhcmF0aXZvLiBBanVzdGUgc2UgYSB0YXJpZmEgb3UgYSBnYXNvbGluYSBtdWRhcmVtIG11aXRvLgpjb25zdCBUQVJJRkE9MS4wNSwgR0FTT0xJTkE9Ni4zMCwgQ09OU19HQVNPTElOQT0xMSwgS1dIMTAwX1BBRFJBTz0xMzsKCmxldCBWPW51bGw7CgpmdW5jdGlvbiBlc2Mocyl7IHJldHVybiBTdHJpbmcocz09bnVsbD8nJzpzKQogIC5yZXBsYWNlKC8mL2csJyZhbXA7JykucmVwbGFjZSgvPC9nLCcmbHQ7JykucmVwbGFjZSgvPi9nLCcmZ3Q7JykucmVwbGFjZSgvIi9nLCcmcXVvdDsnKTsgfQpmdW5jdGlvbiBicmwodil7IHJldHVybiAnUiQgJytOdW1iZXIodnx8MCkudG9Mb2NhbGVTdHJpbmcoJ3B0LUJSJyx7bWluaW11bUZyYWN0aW9uRGlnaXRzOjAsbWF4aW11bUZyYWN0aW9uRGlnaXRzOjB9KTsgfQpmdW5jdGlvbiBicmwyKHYpeyByZXR1cm4gJ1IkICcrTnVtYmVyKHZ8fDApLnRvTG9jYWxlU3RyaW5nKCdwdC1CUicse21pbmltdW1GcmFjdGlvbkRpZ2l0czoyLG1heGltdW1GcmFjdGlvbkRpZ2l0czoyfSk7IH0KZnVuY3Rpb24gbm9tZVYodil7IHJldHVybiAodi5tb2RlbG8rJyAnKyh2LnZlcnNhb3x8JycpKS50cmltKCk7IH0KZnVuY3Rpb24gZmFsaGFyKG1zZyl7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2xvYWQnKS5zdHlsZS5kaXNwbGF5PSdub25lJzsKICBjb25zdCBlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdlcnJvJyk7CiAgZS50ZXh0Q29udGVudD1tc2c7IGUuc3R5bGUuZGlzcGxheT0nJzsKfQoKYXN5bmMgZnVuY3Rpb24gY2FycmVnYXIoKXsKICBpZighUkVGKXsgZmFsaGFyKCdMaW5rIGluY29tcGxldG8uIFBlw6dhIHVtIG5vdm8gUVIgQ29kZSBwYXJhIG8gdmVuZGVkb3IuJyk7IHJldHVybjsgfQogIGNvbnN0IGNhbXBvID0gL15cZCskLy50ZXN0KFJFRikgPyAnaWQnIDogJ3NsdWcnOwogIHRyeXsKICAgIGNvbnN0IHU9YCR7U1VQQV9VUkx9L3Jlc3QvdjEvYnBfdmVpY3Vsb3M/JHtjYW1wb309ZXEuJHtlbmNvZGVVUklDb21wb25lbnQoUkVGKX0mc2VsZWN0PSpgOwogICAgbGV0IHI9YXdhaXQgZmV0Y2godSx7aGVhZGVyczpIKC9eZXlKLy50ZXN0KFNVUEFfS0VZKSl9KTsKICAgIGlmKHIuc3RhdHVzPT09NDAxfHxyLnN0YXR1cz09PTQwMykgcj1hd2FpdCBmZXRjaCh1LHtoZWFkZXJzOkgoIS9eZXlKLy50ZXN0KFNVUEFfS0VZKSl9KTsKICAgIGNvbnN0IHJvd3M9ci5vaz9hd2FpdCByLmpzb24oKTpbXTsKICAgIFY9cm93c1swXTsKICAgIGlmKCFWIHx8IFYuYXRpdm89PT1mYWxzZSl7IGZhbGhhcignVmXDrWN1bG8gbsOjbyBlbmNvbnRyYWRvLicpOyByZXR1cm47IH0KICAgIG1vbnRhcigpOwogIH1jYXRjaChlKXsgZmFsaGFyKCdOw6NvIGRldSBwYXJhIGNhcnJlZ2FyLiBDb25maXJhIHN1YSBjb25leMOjbyBlIHRlbnRlIGRlIG5vdm8uJyk7IH0KfQoKZnVuY3Rpb24gbW9udGFyKCl7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2xvYWQnKS5zdHlsZS5kaXNwbGF5PSdub25lJzsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnYXBwJykuc3R5bGUuZGlzcGxheT0nJzsKICBkb2N1bWVudC50aXRsZT0nQllEICcrbm9tZVYoVikrJyDCtyBQYXJ2aSBPbGluZGEnOwoKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZi1ub21lJykudGV4dENvbnRlbnQ9bm9tZVYoVik7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2Ytc2VnJykudGV4dENvbnRlbnQ9W1Yuc2VnbWVudG8sIFYudGVjbm9sb2dpYT09PSdCRVYnPycxMDAlIGVsw6l0cmljbyc6KFYudGVjbm9sb2dpYT09PSdQSEVWJz8nSMOtYnJpZG8gcGx1Zy1pbic6JycpXS5maWx0ZXIoQm9vbGVhbikuam9pbignIMK3ICcpOwoKICBpZihWLnByZWNvKXsKICAgIGNvbnN0IHA9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2YtcHJlY28nKTsKICAgIHAuaW5uZXJIVE1MPSc8c3BhbiBjbGFzcz0iYXBhcnQiPkEgUEFSVElSIERFPC9zcGFuPicrYnJsKFYucHJlY28pOwogICAgcC5zdHlsZS5kaXNwbGF5PScnOwogIH0KCiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2YtZm90bycpLmlubmVySFRNTCA9IFYuZm90bwogICAgPyBgPGltZyBjbGFzcz0iZm90byIgc3JjPSIke2VzYyhWLmZvdG8pfSIgYWx0PSIke2VzYyhub21lVihWKSl9Ij5gCiAgICA6IGA8ZGl2IGNsYXNzPSJzZW0tZm90byI+4pqhPC9kaXY+YDsKCiAgY29uc3Qgc3A9W107CiAgaWYoVi5hdXRvbm9taWFfa20pICBzcC5wdXNoKHtiOlYuYXV0b25vbWlhX2ttKycga20nLCBzOidhdXRvbm9taWEnfSk7CiAgaWYoVi5wb3RlbmNpYV9jdikgICBzcC5wdXNoKHtiOlYucG90ZW5jaWFfY3YrJyBjdicsICBzOidwb3TDqm5jaWEnfSk7CiAgaWYoVi5iYXRlcmlhX2t3aCkgICBzcC5wdXNoKHtiOlYuYmF0ZXJpYV9rd2grJyBrV2gnLCBzOidiYXRlcmlhJ30pOwogIGlmKFYuZXN0b3F1ZT4wKSAgICAgc3AucHVzaCh7YjonUHJvbnRhJywgczonZW50cmVnYSd9KTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZi1zcGVjcycpLmlubmVySFRNTCA9IHNwLmxlbmd0aAogICAgPyBzcC5tYXAoeD0+YDxkaXYgY2xhc3M9InNwZWMiPjxiPiR7ZXNjKHguYil9PC9iPjxzcGFuPiR7ZXNjKHgucyl9PC9zcGFuPjwvZGl2PmApLmpvaW4oJycpCiAgICA6ICcnOwoKICBjb25zdCBkPShWLmRlc3RhcXVlc3x8JycpLnNwbGl0KCdcbicpLm1hcChzPT5zLnRyaW0oKSkuZmlsdGVyKEJvb2xlYW4pOwogIGlmKGQubGVuZ3RoKXsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdmLWRlc3QtYm94Jykuc3R5bGUuZGlzcGxheT0nJzsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdmLWRlc3QnKS5pbm5lckhUTUw9ZC5tYXAoeD0+YDxsaT4ke2VzYyh4KX08L2xpPmApLmpvaW4oJycpOwogIH0KCiAgY29uc3QgYz0oVi5jb3Jlc3x8JycpLnNwbGl0KCcsJykubWFwKHM9PnMudHJpbSgpKS5maWx0ZXIoQm9vbGVhbik7CiAgaWYoYy5sZW5ndGgpewogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2YtY29yZXMtYm94Jykuc3R5bGUuZGlzcGxheT0nJzsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdmLWNvcmVzJykuaW5uZXJIVE1MPWMubWFwKHg9PmA8c3BhbiBjbGFzcz0iY29yIj4ke2VzYyh4KX08L3NwYW4+YCkuam9pbignJyk7CiAgfQoKICBpZihWLnRlY25vbG9naWE9PT0nQkVWJyl7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZi1jYWxjJykuc3R5bGUuZGlzcGxheT0nJzsKICAgIGNhbGMoKTsKICB9CgogIGNvbnN0IG5vbWU9VkVORHx8J2EgbG9qYSc7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2N0YS1ub21lJykudGV4dENvbnRlbnQ9bm9tZTsKICBjb25zdCBtc2c9YE9pJHtWRU5EPycgJytWRU5EOicnfSEgVmkgYSBmaWNoYSBkbyBCWUQgJHtub21lVihWKX0gZSBxdWVyaWEgc2FiZXIgbWFpcy5gOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjdGEnKS5ocmVmID0gV1BQCiAgICA/ICdodHRwczovL3dhLm1lLycrV1BQKyc/dGV4dD0nK2VuY29kZVVSSUNvbXBvbmVudChtc2cpCiAgICA6ICdodHRwczovL3dhLm1lLz90ZXh0PScrZW5jb2RlVVJJQ29tcG9uZW50KG1zZyk7Cn0KCmZ1bmN0aW9uIGNhbGMoKXsKICBjb25zdCBrbT1NYXRoLm1heCgwLCBOdW1iZXIoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ttJykudmFsdWUpfHwwKTsKICBjb25zdCBrd2g9TnVtYmVyKFYuY29uc3Vtb19rd2gxMDApfHxLV0gxMDBfUEFEUkFPOwogIGNvbnN0IGVsZT1rbSooa3doLzEwMCkqVEFSSUZBOwogIGNvbnN0IGdhcz0oa20vQ09OU19HQVNPTElOQSkqR0FTT0xJTkE7CiAgY29uc3QgZWNvPU1hdGgubWF4KDAsIGdhcy1lbGUpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdlY28nKS50ZXh0Q29udGVudD1icmwyKGVjbyk7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2Jhc2UnKS50ZXh0Q29udGVudD0KICAgIGBSZWNhcmdhICR7YnJsMihlbGUpfSBjb250cmEgJHticmwyKGdhcyl9IGRlIGdhc29saW5hLiBCYXNlOiBSJCAke1RBUklGQS50b0ZpeGVkKDIpfS9rV2gsIGdhc29saW5hIGEgUiQgJHtHQVNPTElOQS50b0ZpeGVkKDIpfSBlIGNhcnJvIGZhemVuZG8gJHtDT05TX0dBU09MSU5BfSBrbS9sLmA7Cn0KCmNhcnJlZ2FyKCk7Cjwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K';
+function gerarFicha(){
+  if(!SUPA_URL||!SUPA_KEY){ toast('Conecte o banco primeiro.','err'); return; }
+  try{
+    const bin=atob(FICHA_B64);
+    const bytes=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+    let html=new TextDecoder('utf-8').decode(bytes);
+    html=html.replace('COLE_AQUI_SUA_URL', SUPA_URL)
+             .replace('COLE_AQUI_SUA_CHAVE_ANON', SUPA_KEY);
+    const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download='veiculo.html';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    toast('veiculo.html baixado. Suba no GitHub junto com o painel.','ok');
+  }catch(e){ erroLegivel(e,'gerar a ficha'); }
+}
+
+/* ---------- ATALHOS E START ---------- */
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){
+    ['c-modal','v-modal','q-modal','i-modal'].forEach(i=>{
+      const m=document.getElementById(i); if(m) m.style.display='none';
+    });
+    document.getElementById('tema-menu')?.remove();
+  }
+});
+document.addEventListener('click', e=>{
+  const m=document.getElementById('tema-menu');
+  if(m && !m.contains(e.target) && !e.target.closest('[onclick*="menuTema"]')) m.remove();
+});
+boot();
+</script>
+</body>
+</html>
