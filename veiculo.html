@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#2F87C8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>BYD Parvi Olinda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--az:#2F87C8;--az2:#4E9FD6;--txt:#0b2237;--txt2:#4a6280;--txt3:#8fa3bb;
+  --bg:#fff;--sf:#f2f7fc;--ln:#dfe8f3;--ok:#15803d}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);
+  color:var(--txt);font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%;padding-bottom:104px}
+.wrap{max-width:560px;margin:0 auto;padding:0 18px}
+
+.top{background:linear-gradient(160deg,var(--az),var(--az2));color:#fff;
+  padding:calc(20px + env(safe-area-inset-top,0px)) 18px 26px;text-align:center}
+.lock{width:148px;height:auto;display:block;margin:0 auto 16px}
+.top h1{font-size:29px;font-weight:800;letter-spacing:-.03em;line-height:1.12}
+.top .seg{font-size:13px;opacity:.9;margin-top:5px;font-weight:500}
+.top .preco{font-size:24px;font-weight:800;margin-top:15px;letter-spacing:-.02em}
+.top .apart{display:block;font-size:11px;font-weight:600;opacity:.82;letter-spacing:.03em;margin-bottom:1px}
+
+.foto{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.sem-foto{width:100%;aspect-ratio:16/10;background:var(--sf);display:flex;
+  align-items:center;justify-content:center;font-size:48px;opacity:.4}
+
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:9px;margin:20px 0}
+.spec b em{font-style:normal;font-size:11px;font-weight:700;margin-left:1px}
+.tec-tag{display:inline-block;padding:5px 13px;border-radius:999px;font-size:11px;
+  font-weight:800;letter-spacing:.04em;background:rgba(255,255,255,.2);margin-bottom:11px}
+.ft{width:100%;border-collapse:collapse}
+.ft tr{border-bottom:1px dashed var(--ln)}
+.ft tr:last-child{border-bottom:none}
+.ft td{padding:11px 0;font-size:14.5px;vertical-align:top}
+.ft td:first-child{color:var(--txt2);white-space:nowrap;padding-right:16px}
+.ft td:last-child{font-weight:700;text-align:right}
+.spec{background:var(--sf);border-radius:13px;padding:13px 11px;text-align:center}
+.spec b{display:block;font-size:19px;font-weight:800;color:var(--az);letter-spacing:-.02em}
+.spec span{font-size:11px;color:var(--txt2);font-weight:600}
+
+h2{font-size:12.5px;font-weight:700;color:var(--txt3);letter-spacing:.06em;margin:24px 0 11px}
+ul.dest{list-style:none}
+ul.dest li{padding:11px 0 11px 27px;border-bottom:1px solid var(--ln);position:relative;font-size:14.5px}
+ul.dest li:last-child{border-bottom:none}
+ul.dest li::before{content:'';position:absolute;left:4px;top:18px;width:7px;height:7px;
+  border-radius:50%;background:var(--az)}
+.cores{display:flex;flex-wrap:wrap;gap:7px}
+.cor{background:var(--sf);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600}
+
+.calc{background:var(--sf);border-radius:17px;padding:18px;margin-top:22px}
+.calc h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.calc p{font-size:12.5px;color:var(--txt2);margin-bottom:14px}
+.calc label{display:block;font-size:11.5px;font-weight:700;color:var(--txt2);margin-bottom:5px}
+.calc input{width:100%;padding:12px;border:1px solid var(--ln);border-radius:11px;
+  background:#fff;font-size:16px;font-family:inherit;color:var(--txt);outline:none}
+.calc input:focus{border-color:var(--az)}
+.res{background:var(--az);color:#fff;border-radius:13px;padding:16px;margin-top:14px;text-align:center}
+.res b{display:block;font-size:31px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.res span{font-size:12.5px;opacity:.93;font-weight:500}
+.res small{display:block;font-size:11px;opacity:.8;margin-top:7px;line-height:1.45}
+
+.bar{position:fixed;left:0;right:0;bottom:0;padding:13px 18px calc(13px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(to top,#fff 74%,rgba(255,255,255,0));z-index:20}
+.bar .in{max-width:560px;margin:0 auto}
+.cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:17px;
+  border-radius:15px;background:var(--ok);color:#fff;font-size:16px;font-weight:700;
+  text-decoration:none;border:none;font-family:inherit}
+.cta:active{transform:scale(.988)}
+.zap{font-size:11.5px;color:var(--txt3);text-align:center;margin-top:9px}
+.load,.erro{text-align:center;padding:22vh 24px;color:var(--txt2);font-size:15px;
+  line-height:1.6;white-space:pre-line;max-width:420px;margin:0 auto}
+
+/* ===== MODO CATÁLOGO (sem ?v= no link) ===== */
+.cat-filtros{display:flex;gap:7px;margin:20px 0 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding-bottom:3px}
+.cat-f{flex-shrink:0;padding:9px 16px;border-radius:999px;border:1.5px solid var(--ln);
+  background:#fff;color:var(--txt2);font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer}
+.cat-f.on{background:var(--az);border-color:var(--az);color:#fff}
+.cat-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:620px){.cat-grid{grid-template-columns:1fr 1fr}}
+.cat-card{border:1px solid var(--ln);border-radius:17px;overflow:hidden;background:#fff;
+  text-align:left;padding:0;font-family:inherit;cursor:pointer;display:block;width:100%;
+  box-shadow:0 1px 3px rgba(11,34,55,.07);transition:box-shadow .18s,transform .18s}
+.cat-card:active{transform:scale(.99)}
+@media(hover:hover){.cat-card:hover{box-shadow:0 6px 26px rgba(47,135,200,.24)}}
+.cat-card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--sf)}
+.cat-card .vaz{width:100%;aspect-ratio:16/10;background:var(--sf);display:flex;
+  align-items:center;justify-content:center;font-size:40px;opacity:.4}
+.cat-b{padding:14px 15px 16px}
+.cat-b h3{font-size:17px;font-weight:800;letter-spacing:-.02em;margin:0}
+.cat-b .pr{font-size:19px;font-weight:800;color:var(--az);margin-top:3px;letter-spacing:-.02em}
+.cat-b .tg{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.cat-b .tg span{background:var(--sf);border-radius:999px;padding:4px 11px;font-size:11.5px;font-weight:700;color:var(--txt2)}
+.cat-b .tg span.el{background:#e8f6ee;color:#15803d}
+.cat-b .tg span.hi{background:#fff3e2;color:#b45309}
+.cat-b .vm{font-size:12.5px;color:var(--az);font-weight:700;margin-top:11px}
+.voltar{display:inline-flex;align-items:center;gap:6px;background:none;border:none;
+  color:#fff;font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+  padding:6px 0;margin-bottom:6px;opacity:.9}
+.pe{font-size:11px;color:var(--txt3);text-align:center;margin:26px 0 10px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div id="load" class="load">Carregando…</div>
+
+<!-- modo catálogo: o mesmo arquivo, aberto sem ?v= -->
+<div id="cat" style="display:none">
+  <div class="top">
+    <img class="lock" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbEAAAA+CAYAAAClQSUIAAAL1ElEQVR42u2d73XbOhLF73vH38OtwEwF4VZgpoLVVmClAisVSK4gTgUrV7ByBaEqeHAFgSpYvAq8HwgdybIkYoYARZH3d46O7UT8NwDmzgAg8Mfb2xsIIZ1S+s+CpiCkHX/SBIR0Tg7glmYgpD03NAEhhJCesARwJ/i+o4gRQgjpC19Q91SEUrE7kRBCSB/IABTCYwwzMULIMVY+Kk6F8x/jP2sAlmYfNYXimIoiRgg5xp2PjFNT7kfVAJ4APNP8o0QTNG3YnUgIOSTrSMCOReJLAH9BNi5ChoGmzA1FjBByTEwuff1fFDLWuyYBA/ieGCHkI196cA+5F7KMxUERO4GliBFCjlH25D5yAA8sjtEImDRgqShihJBT4tEXZszGWOdOYACu2EEIOR4V94UMwD2AnyyWQWMUPQBrihghpM8CtqWkiA0eC+V7guxOJIT0XcQKFgs5xY2Pcu4vfB/OfyTf33jlNpHu4T8N//8MP5B4ZSxwfsX0F9SrM5zjB+KMS0jLeZ/NkcgNvvwdm3I0NDMTV2faYYZ6vGPS4p5yFgs5J2I5gOkVP4PzjaityDTZoLpS+9zhfF+zDRCxSc8dicNu+aKXKy6ra816nuDHJxqE6AH1RA0Nt0cCGUIGMSaWeQGaeof8FVyDbWxk2G00OfPlXwF4ZF3oRMReA75jAXz3v886qA+5/2ReALMjvQlu77PZC4Zcz+p27svl094zOG/30fdEDG1iRw7gt3deC/qj0ZLvBTZLipnIbpkiC5Y40UeliG0a7vtf3tGXEXoNKt878dKi3ki64Cu8Xy8yQz3EM0Hz+1MrAP/e+3sGeZewgX7izMTbXsK3g7+nkO0h9u4cQ52dOPc/KWRk6h3bAlxYNkUWZhSiZxGnezpHPZZdRrbDNqt/UgbEmVCozYEIzYUCuM8t5MNDtoWI/RCW5fLIv90Ly/BdnRvy7MR5B90W5HoyjKVvcOQ0mkkdRnGMi3SNAulXF5mjXpBYkqEWiufLUC+zJZ1EZY4IkqZ9aLMw6bGPJ4IGqeiOQsQgjGjI8JmB6/HFzsSqDpymjSi6Wrv8N2Ew8LcXSo0gH45Haie/3CqOkS4JtjxSlq3r3A3qMaTlFUXUEvXOvKEf6Z9aserQ8WdnrpUHfKeJ0ke731isUSLyjeIa0rIzEUUXLepNGSjaEjs6L5Aa29sjWa1RPt8/hGVZKkT3MVKdM4citkbz9Ng+shWoRUD0TRFrx/ceZw63qLs1SkGDmPoGu2DRvmtPGlGQOk1NtlFFFN02zANFrBDaXRuQ2TPCJj3nrbAs5xGyMG02/S77vObuROfF6VtAJbkFGSIG9QyybwA++59W0AhLmrBVVlMpjpkrjllHFN222ViWyJaIaH+rOFcurCsxsjBNUPMh+xzCmNgyoNDorMbB0otZaIbFiR7tImKps1wosqfVhYVC6uwLdNf1biJlx1IRe1CUu41Ujh/OM5Qp9gZcmoa8j/o2aF5KrEA9vZdT7yOMTTQwVWZhS6HoOuyWo9tG7e5IBlcqn/lTAjtq2UTMxDJBPZkKRef5zDWlgl8NVcSaKo4LNDaFcFhZGQKEbEoRU2c2ISKW+Uhcs7mlRd1dfIzywLGtUHc7hgpr5uvGpAcZrQZ35lk1MxRDfV+ssbBodW4IIjYNMIaLcJ3sSu0zZmFeeqcyO/OdEuGzzihi75ngdFf9fsajZdEgcDMfgGjat0M9YWnSAzueyjgq7NYEBeoZhJ/QPDZnEvkJTRb2GFnwN0MTsSmaxzUc4sy+nOD69jTKmV3i0deTc43+buQiViiDtFnCe7INGXKMGbOaZ/47cdBovF3XZxz4OsB2KURMmoUtGv5fGuC4U5lYAfnaV5d2zBnCZwqtIl239IWyuBI7ZQh7QdNi2DhfB6YdRM/XSh8DnS7amSYLMw1trk1deookzg664ZFzOwVosrDnyPXuqO23IrYYcAN9FBioyahz1BMBqhPO352J1OxBtD9Bmi7KW+z2b8oCK/zQeaGIneVLz+7nCenHKWeKzMIEZLRtRDvm+6wh/uyQcy88x87CNPY6KWJDZiHINEK/J41ItiwPROwB/Zj6P4Y9mkxAmY6Zskf3YpFucYISu02Ac+W9pQgGlgme2SqOOfXCc4osrIj1TEMWMWnFeMX4cIi3M3afsYENeKybLuY9KqeviDcRq/DCshWvrOU5U2RiqUT7NWI9SJGF5bHsP2QRkzqkFeQrSF87K5Cxk/VExAzqfbFsi+cosNtXrEjQlqsEjnmBNOPSmnPmHWVhgHz/sJPCPGQRm/uI7kmQlTxhXOvpjWVNyRBnNtYsrOjBPTz5uugU5Rq6eWQXgXGpEJpUY38mUjvRrM6Rot6ZU/WDW7F8dOoG42CK8ex23NRgHMbLJSd1WO/4vwvLoETda/LbC2DZgYC5hvaiCQaqxPcrrdf5kb8nwud5jtQmgzPLVFuxpO6eCI26Msi3Yvkndkvk5BgelY+W1hgP9wmi1qFQXqgOLhVZSO7b5fQC92wC7k3KqoMgoRDa9zDQlTzXQnCdLJb9r3krltAKPYO822zpP3e+EmyNngsrsI3gKDXZ0n4UZrGbwFFhnN1mpbaBjIAuAjW7V//WSntPcdkx66Z71ozxrDu4Z4mIZQe/3wuOXQqeJ49p/2seE7Oot95Y4/z6eJkvSKOsZOsLP+NnkDYsAhrNasT2KRTHSJzQJlIZzi9spyqyHQ3Sd2NLfV7mPw51N6KknCWJQrRJHdcuYvsRwENDJfoy8mh7zFlGk/OzGFfXalsBMx1n8zEFzGH3IvVv4bGbyLa0HdhOuxCwEdp8KXyeQlFudsgitq0QBQh53xh/BTrJMdtI09a6YtpSwJzPso3/uWkp3k0ZTMosqYtMDKjflywSZmGaenf2OYYiYhkI2VGi7mJuaiwW496GRdOtU/Uoiz4lXEvstmZJ7kSRbhubGMG9xpemzMIyRFpuakgilqN54N6CjIEMsr2rFiO3V1+d7zYLk4pNhXqcvKm9S8W76XxRthRJKGQSOz5B/lpS6jpXDVnEthF3U2Q21jGPsQjXBPVKDaWgAT6Bm2FqHEpXy7PdC7+/Qr3iR4rnbso+S+H5XIfBgBGKmETApFlYEsG/CcxkuuJWkH1N0O1WLGPm4YStHZr3VwrhU0NZZvg4/TeHfskkgzhbXly7+GfCYyy6eTG8FJarE5ZnoagvTf6oj9lsSBbZ5ryaFX+07fWsiIVkM9fMWJZWSskMw3nx2wgidmZh3TjEQ6T7G1aQ7UIhFe/XyLbsUsRSZc5LZX2IbquhLzu1AMfDyHtn95V1AoCuW6fqqcCGisIMwF/Cc7uG7LPPwUAqwbTQd8UXsW01ZBFbMQsjBw4s1jYfQ6DsiUOM4eiKgGf9Bd2KHybyvXadiaUQTG1yUCjs3xg4DXUV+yXqWUqEVKjHSwxN8Y5ccUxXM+qkjm7ig5SlD1Iy7zBL7LZmSZXJaDLaLvcudHs2uXQWliew/+BEzPko4Sd9FMUL41voOGW243oeCPzwn64zGakdzQV6AwziTd5btDg2ieAPRcQM6u7Dn2B30VhxXrgqHymyHpymVLaxLssy64mtmp5bKmL2As9gI56nzWspmsCpsR3fAPgfuhuwjZUabw1qcb0rs9uAymV7cq+vHd6LDSz/7e/be6NohZP3XMQs+rOM3GuDU856bMfY11x0XO+C7vsGwIv/kG65pjG7CYtrUGi6dboMqKoeiZiLHAxcImGIEeS3zcIyJJp1+ifbMyGjQyMQXWYQfRnTbhLuvk/qiFl2iwvUuSDBp4gRQhHrm/O1qJcFi33OVcQsTGNHh8t0e9uW122bhWkFPyiDpIgRMj4ByxSRfNfO93skIatQd4d/hnzYpOmZ8x5ns9Ks8hzTPmf/N2zThIyKDPJxmepC9/rdZ4BzgWA47GYrH85SlU5iMw12dMLzrS5Y7i/KQMQg3msqsWz/jj/e3t7YrAnplinq7UD4Qr4skr/Dxw0b7Z5wvYIvtY8OZmKEkGvAUKDIMTgmRgghhJkYIUSUVTiagZD2/B+HU7pmvuuWLAAAAABJRU5ErkJggg==" alt="BYD Parvi">
+    <h1>Nossa linha</h1>
+    <div class="seg">100% elétricos e híbridos plug-in · Olinda</div>
+  </div>
+  <div class="wrap">
+    <div class="cat-filtros" id="cat-filtros"></div>
+    <div class="cat-grid" id="cat-grid"></div>
+    <p class="pe">Valores de referência, sujeitos à campanha vigente. Fale com a gente para a condição do dia.</p>
+  </div>
+  <div class="bar"><div class="in">
+    <a class="cta" id="cat-cta" href="#">Falar com <span id="cat-nome">a loja</span></a>
+    <p class="zap">BYD Parvi · Olinda, Pernambuco</p>
+  </div></div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="top">
+    <img class="lock" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbEAAAA+CAYAAAClQSUIAAAL1ElEQVR42u2d73XbOhLF73vH38OtwEwF4VZgpoLVVmClAisVSK4gTgUrV7ByBaEqeHAFgSpYvAq8HwgdybIkYoYARZH3d46O7UT8NwDmzgAg8Mfb2xsIIZ1S+s+CpiCkHX/SBIR0Tg7glmYgpD03NAEhhJCesARwJ/i+o4gRQgjpC19Q91SEUrE7kRBCSB/IABTCYwwzMULIMVY+Kk6F8x/jP2sAlmYfNYXimIoiRgg5xp2PjFNT7kfVAJ4APNP8o0QTNG3YnUgIOSTrSMCOReJLAH9BNi5ChoGmzA1FjBByTEwuff1fFDLWuyYBA/ieGCHkI196cA+5F7KMxUERO4GliBFCjlH25D5yAA8sjtEImDRgqShihJBT4tEXZszGWOdOYACu2EEIOR4V94UMwD2AnyyWQWMUPQBrihghpM8CtqWkiA0eC+V7guxOJIT0XcQKFgs5xY2Pcu4vfB/OfyTf33jlNpHu4T8N//8MP5B4ZSxwfsX0F9SrM5zjB+KMS0jLeZ/NkcgNvvwdm3I0NDMTV2faYYZ6vGPS4p5yFgs5J2I5gOkVP4PzjaityDTZoLpS+9zhfF+zDRCxSc8dicNu+aKXKy6ra816nuDHJxqE6AH1RA0Nt0cCGUIGMSaWeQGaeof8FVyDbWxk2G00OfPlXwF4ZF3oRMReA75jAXz3v886qA+5/2ReALMjvQlu77PZC4Zcz+p27svl094zOG/30fdEDG1iRw7gt3deC/qj0ZLvBTZLipnIbpkiC5Y40UeliG0a7vtf3tGXEXoNKt878dKi3ki64Cu8Xy8yQz3EM0Hz+1MrAP/e+3sGeZewgX7izMTbXsK3g7+nkO0h9u4cQ52dOPc/KWRk6h3bAlxYNkUWZhSiZxGnezpHPZZdRrbDNqt/UgbEmVCozYEIzYUCuM8t5MNDtoWI/RCW5fLIv90Ly/BdnRvy7MR5B90W5HoyjKVvcOQ0mkkdRnGMi3SNAulXF5mjXpBYkqEWiufLUC+zJZ1EZY4IkqZ9aLMw6bGPJ4IGqeiOQsQgjGjI8JmB6/HFzsSqDpymjSi6Wrv8N2Ew8LcXSo0gH45Haie/3CqOkS4JtjxSlq3r3A3qMaTlFUXUEvXOvKEf6Z9aserQ8WdnrpUHfKeJ0ke731isUSLyjeIa0rIzEUUXLepNGSjaEjs6L5Aa29sjWa1RPt8/hGVZKkT3MVKdM4citkbz9Ng+shWoRUD0TRFrx/ceZw63qLs1SkGDmPoGu2DRvmtPGlGQOk1NtlFFFN02zANFrBDaXRuQ2TPCJj3nrbAs5xGyMG02/S77vObuROfF6VtAJbkFGSIG9QyybwA++59W0AhLmrBVVlMpjpkrjllHFN222ViWyJaIaH+rOFcurCsxsjBNUPMh+xzCmNgyoNDorMbB0otZaIbFiR7tImKps1wosqfVhYVC6uwLdNf1biJlx1IRe1CUu41Ujh/OM5Qp9gZcmoa8j/o2aF5KrEA9vZdT7yOMTTQwVWZhS6HoOuyWo9tG7e5IBlcqn/lTAjtq2UTMxDJBPZkKRef5zDWlgl8NVcSaKo4LNDaFcFhZGQKEbEoRU2c2ISKW+Uhcs7mlRd1dfIzywLGtUHc7hgpr5uvGpAcZrQZ35lk1MxRDfV+ssbBodW4IIjYNMIaLcJ3sSu0zZmFeeqcyO/OdEuGzzihi75ngdFf9fsajZdEgcDMfgGjat0M9YWnSAzueyjgq7NYEBeoZhJ/QPDZnEvkJTRb2GFnwN0MTsSmaxzUc4sy+nOD69jTKmV3i0deTc43+buQiViiDtFnCe7INGXKMGbOaZ/47cdBovF3XZxz4OsB2KURMmoUtGv5fGuC4U5lYAfnaV5d2zBnCZwqtIl239IWyuBI7ZQh7QdNi2DhfB6YdRM/XSh8DnS7amSYLMw1trk1deookzg664ZFzOwVosrDnyPXuqO23IrYYcAN9FBioyahz1BMBqhPO352J1OxBtD9Bmi7KW+z2b8oCK/zQeaGIneVLz+7nCenHKWeKzMIEZLRtRDvm+6wh/uyQcy88x87CNPY6KWJDZiHINEK/J41ItiwPROwB/Zj6P4Y9mkxAmY6Zskf3YpFucYISu02Ac+W9pQgGlgme2SqOOfXCc4osrIj1TEMWMWnFeMX4cIi3M3afsYENeKybLuY9KqeviDcRq/DCshWvrOU5U2RiqUT7NWI9SJGF5bHsP2QRkzqkFeQrSF87K5Cxk/VExAzqfbFsi+cosNtXrEjQlqsEjnmBNOPSmnPmHWVhgHz/sJPCPGQRm/uI7kmQlTxhXOvpjWVNyRBnNtYsrOjBPTz5uugU5Rq6eWQXgXGpEJpUY38mUjvRrM6Rot6ZU/WDW7F8dOoG42CK8ex23NRgHMbLJSd1WO/4vwvLoETda/LbC2DZgYC5hvaiCQaqxPcrrdf5kb8nwud5jtQmgzPLVFuxpO6eCI26Msi3Yvkndkvk5BgelY+W1hgP9wmi1qFQXqgOLhVZSO7b5fQC92wC7k3KqoMgoRDa9zDQlTzXQnCdLJb9r3krltAKPYO822zpP3e+EmyNngsrsI3gKDXZ0n4UZrGbwFFhnN1mpbaBjIAuAjW7V//WSntPcdkx66Z71ozxrDu4Z4mIZQe/3wuOXQqeJ49p/2seE7Oot95Y4/z6eJkvSKOsZOsLP+NnkDYsAhrNasT2KRTHSJzQJlIZzi9spyqyHQ3Sd2NLfV7mPw51N6KknCWJQrRJHdcuYvsRwENDJfoy8mh7zFlGk/OzGFfXalsBMx1n8zEFzGH3IvVv4bGbyLa0HdhOuxCwEdp8KXyeQlFudsgitq0QBQh53xh/BTrJMdtI09a6YtpSwJzPso3/uWkp3k0ZTMosqYtMDKjflywSZmGaenf2OYYiYhkI2VGi7mJuaiwW496GRdOtU/Uoiz4lXEvstmZJ7kSRbhubGMG9xpemzMIyRFpuakgilqN54N6CjIEMsr2rFiO3V1+d7zYLk4pNhXqcvKm9S8W76XxRthRJKGQSOz5B/lpS6jpXDVnEthF3U2Q21jGPsQjXBPVKDaWgAT6Bm2FqHEpXy7PdC7+/Qr3iR4rnbso+S+H5XIfBgBGKmETApFlYEsG/CcxkuuJWkH1N0O1WLGPm4YStHZr3VwrhU0NZZvg4/TeHfskkgzhbXly7+GfCYyy6eTG8FJarE5ZnoagvTf6oj9lsSBbZ5ryaFX+07fWsiIVkM9fMWJZWSskMw3nx2wgidmZh3TjEQ6T7G1aQ7UIhFe/XyLbsUsRSZc5LZX2IbquhLzu1AMfDyHtn95V1AoCuW6fqqcCGisIMwF/Cc7uG7LPPwUAqwbTQd8UXsW01ZBFbMQsjBw4s1jYfQ6DsiUOM4eiKgGf9Bd2KHybyvXadiaUQTG1yUCjs3xg4DXUV+yXqWUqEVKjHSwxN8Y5ccUxXM+qkjm7ig5SlD1Iy7zBL7LZmSZXJaDLaLvcudHs2uXQWliew/+BEzPko4Sd9FMUL41voOGW243oeCPzwn64zGakdzQV6AwziTd5btDg2ieAPRcQM6u7Dn2B30VhxXrgqHymyHpymVLaxLssy64mtmp5bKmL2As9gI56nzWspmsCpsR3fAPgfuhuwjZUabw1qcb0rs9uAymV7cq+vHd6LDSz/7e/be6NohZP3XMQs+rOM3GuDU856bMfY11x0XO+C7vsGwIv/kG65pjG7CYtrUGi6dboMqKoeiZiLHAxcImGIEeS3zcIyJJp1+ifbMyGjQyMQXWYQfRnTbhLuvk/qiFl2iwvUuSDBp4gRQhHrm/O1qJcFi33OVcQsTGNHh8t0e9uW122bhWkFPyiDpIgRMj4ByxSRfNfO93skIatQd4d/hnzYpOmZ8x5ns9Ks8hzTPmf/N2zThIyKDPJxmepC9/rdZ4BzgWA47GYrH85SlU5iMw12dMLzrS5Y7i/KQMQg3msqsWz/jj/e3t7YrAnplinq7UD4Qr4skr/Dxw0b7Z5wvYIvtY8OZmKEkGvAUKDIMTgmRgghhJkYIUSUVTiagZD2/B+HU7pmvuuWLAAAAABJRU5ErkJggg==" alt="BYD Parvi" width="433" height="62">
+    <button class="voltar" id="f-voltar" style="display:none" onclick="verCatalogo()">← Ver todos os modelos</button>
+    <div class="tec-tag" id="f-tec" style="display:none"></div>
+    <h1 id="f-nome">—</h1>
+    <div class="seg" id="f-seg"></div>
+    <div class="preco" id="f-preco" style="display:none"></div>
+  </div>
+
+  <div id="f-foto"></div>
+
+  <div class="wrap">
+    <div class="specs" id="f-specs"></div>
+
+    <div id="f-ft-box" style="display:none">
+      <h2>Ficha técnica</h2>
+      <table class="ft" id="f-ft"></table>
+    </div>
+
+    <div id="f-dest-box" style="display:none">
+      <h2>Destaques</h2>
+      <ul class="dest" id="f-dest"></ul>
+    </div>
+
+    <div id="f-cores-box" style="display:none">
+      <h2>Cores</h2>
+      <div class="cores" id="f-cores"></div>
+    </div>
+
+    <div class="calc" id="f-calc" style="display:none">
+      <h3>Quanto você economiza por mês</h3>
+      <p>Coloque quantos quilômetros você roda e veja a diferença entre recarregar e abastecer.</p>
+      <label for="km">Quilômetros por mês</label>
+      <input id="km" type="number" inputmode="numeric" value="1200" oninput="calc()">
+      <div class="res">
+        <b id="eco">R$ 0</b>
+        <span>a menos por mês, comparado com gasolina</span>
+        <small id="base"></small>
+      </div>
+    </div>
+
+    <p class="pe" id="f-nota">
+      Valores e fichas técnicas são de referência e podem mudar conforme a campanha vigente.
+      Confirme as condições com a loja.
+    </p>
+  </div>
+
+  <div class="bar"><div class="in">
+    <a class="cta" id="cta" href="#">Falar com <span id="cta-nome">a loja</span></a>
+    <p class="zap">BYD Parvi · Olinda, Pernambuco</p>
+  </div></div>
+</div>
+
+<div id="erro" class="erro" style="display:none"></div>
+
+<script>
+const SUPA_URL='https://scwzsfaexlmcdvehrphj.supabase.co';
+const SUPA_KEY='sb_publishable_XsybOm_tm56bNfkJiFTL4A_K1-iiFxb';
+function H(bearer){
+  const h={'Content-Type':'application/json', apikey:SUPA_KEY};
+  if(bearer) h.Authorization='Bearer '+SUPA_KEY;
+  return h;
+}
+
+const P=new URLSearchParams(location.search);
+const REF=(P.get('v')||'').trim();
+const WPP=(P.get('w')||'').replace(/\D/g,'');
+const VEND=(P.get('n')||'').trim();
+
+// Parametros do comparativo. Ajuste se a tarifa ou a gasolina mudarem muito.
+const TARIFA=1.05, GASOLINA=6.30, CONS_GASOLINA=11, KWH100_PADRAO=13;
+
+// Colunas que o cliente pode ver. As ressalvas internas do vendedor
+// ficam fora de proposito: com select=* elas viajariam no JSON.
+const CAMPOS='id,modelo,versao,segmento,tecnologia,preco,autonomia_km,autonomia_nota,'
+           + 'potencia_cv,bateria_kwh,consumo_kwh100,aceleracao,torque,porta_malas,'
+           + 'tracao,lugares,motor,destaques,cores,foto,estoque,slug,ativo';
+
+let V=null;
+
+function esc(s){ return String(s==null?'':s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function brl(v){ return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function brl2(v){ return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function nomeV(v){ return (v.modelo+' '+(v.versao||'')).trim(); }
+function falhar(msg){
+  document.getElementById('load').style.display='none';
+  const e=document.getElementById('erro');
+  e.textContent=msg; e.style.display='';
+}
+
+async function carregar(){
+  // Arquivo publicado sem passar pelo painel: os marcadores continuam aqui.
+  // Sem este aviso o fetch vira caminho relativo, o servidor devolve 404 e a
+  // pagina mentiria dizendo que o veiculo nao existe.
+  if(/^COLE_AQUI/.test(SUPA_URL) || /^COLE_AQUI/.test(SUPA_KEY)){
+    falhar('Esta página ainda não foi configurada.\n\nNo painel, vá em Ajustes → '
+         + '"Baixar veiculo.html pronto" e suba esse arquivo no lugar deste.');
+    return;
+  }
+  if(!REF){ carregarCatalogo(); return; }   // sem ?v= o arquivo vira catálogo
+  const campo = /^\d+$/.test(REF) ? 'id' : 'slug';
+  const u=`${SUPA_URL}/rest/v1/bp_veiculos?${campo}=eq.${encodeURIComponent(REF)}&select=${CAMPOS}`;
+  let r;
+  try{
+    r=await fetch(u,{headers:H(/^eyJ/.test(SUPA_KEY))});
+    if(r.status===401||r.status===403) r=await fetch(u,{headers:H(!/^eyJ/.test(SUPA_KEY))});
+  }catch(e){ falhar('Não deu para carregar. Confira sua conexão e tente de novo.'); return; }
+
+  if(!r.ok){
+    // Erro de servidor nao e a mesma coisa que veiculo inexistente.
+    falhar('Não deu para carregar a ficha agora (erro '+r.status+'). Fale com o vendedor.');
+    return;
+  }
+  let rows=[];
+  try{ rows=await r.json(); }catch(e){}
+  V=rows[0];
+  if(!V || V.ativo===false){ falhar('Este veículo não está mais disponível.'); return; }
+  montar();
+}
+
+function montar(){
+  document.getElementById('load').style.display='none';
+  document.getElementById('app').style.display='';
+  document.title='BYD '+nomeV(V)+' · Parvi Olinda';
+
+  document.getElementById('f-nome').textContent=nomeV(V);
+  const tecN = V.tecnologia==='BEV'?'100% ELÉTRICO':(V.tecnologia==='PHEV'?'HÍBRIDO PLUG-IN':'');
+  if(tecN){ const te=document.getElementById('f-tec'); te.textContent=tecN; te.style.display=''; }
+  document.getElementById('f-seg').textContent=[V.segmento, V.tracao, V.lugares?V.lugares+' lugares':'']
+    .filter(Boolean).join(' · ');
+
+  if(V.preco){
+    const p=document.getElementById('f-preco');
+    p.innerHTML='<span class="apart">A PARTIR DE</span>'+brl(V.preco);
+    p.style.display='';
+  }
+
+  document.getElementById('f-foto').innerHTML = V.foto
+    ? `<img class="foto" src="${esc(V.foto)}" alt="${esc(nomeV(V))}">`
+    : `<div class="sem-foto">⚡</div>`;
+
+  const num=v=>String(v).replace('.',',');
+  const sp=[
+    V.potencia_cv  && {b:V.potencia_cv,  u:'cv',  s:'potência'},
+    V.aceleracao   && {b:num(V.aceleracao), u:'s', s:'0 a 100 km/h'},
+    V.autonomia_km && {b:Number(V.autonomia_km).toLocaleString('pt-BR'), u:'km', s:'autonomia'},
+    V.bateria_kwh  && {b:num(V.bateria_kwh), u:'kWh', s:'bateria'},
+    V.porta_malas  && {b:V.porta_malas, u:'L', s:'porta-malas'}
+  ].filter(Boolean).slice(0,4);
+  document.getElementById('f-specs').innerHTML = sp.length
+    ? sp.map(x=>`<div class="spec"><b>${esc(String(x.b))}<em>${esc(x.u)}</em></b><span>${esc(x.s)}</span></div>`).join('')
+    : '';
+
+  // ficha completa, so com o que o cliente pode ver.
+  const ft=[
+    ['Motorização', V.motor],
+    ['Tração',      V.tracao],
+    ['Torque',      V.torque],
+    ['Bateria',     V.bateria_kwh ? num(V.bateria_kwh)+' kWh' : null],
+    ['Autonomia',   V.autonomia_km ? Number(V.autonomia_km).toLocaleString('pt-BR')+' km'
+                    + (V.autonomia_nota?' ('+V.autonomia_nota+')':'') : null],
+    ['0 a 100 km/h',V.aceleracao ? num(V.aceleracao)+' s' : null],
+    ['Porta-malas', V.porta_malas ? V.porta_malas+' litros' : null],
+    ['Lugares',     V.lugares]
+  ].filter(x=>x[1]);
+  if(ft.length){
+    document.getElementById('f-ft-box').style.display='';
+    document.getElementById('f-ft').innerHTML=ft.map(([l,val])=>
+      `<tr><td>${l}</td><td>${esc(String(val))}</td></tr>`).join('');
+  }
+
+  const d=(V.destaques||'').split('\n').map(s=>s.trim()).filter(Boolean);
+  if(d.length){
+    document.getElementById('f-dest-box').style.display='';
+    document.getElementById('f-dest').innerHTML=d.map(x=>`<li>${esc(x)}</li>`).join('');
+  }
+
+  const c=(V.cores||'').split(',').map(s=>s.trim()).filter(Boolean);
+  if(c.length){
+    document.getElementById('f-cores-box').style.display='';
+    document.getElementById('f-cores').innerHTML=c.map(x=>`<span class="cor">${esc(x)}</span>`).join('');
+  }
+
+  if(V.tecnologia==='BEV'){
+    document.getElementById('f-calc').style.display='';
+    calc();
+  }
+  document.getElementById('f-voltar').style.display='';
+
+  const nome=VEND||'a loja';
+  document.getElementById('cta-nome').textContent=nome;
+  const msg=`Oi${VEND?' '+VEND:''}! Vi a ficha do BYD ${nomeV(V)} e queria saber mais.`;
+  document.getElementById('cta').href = WPP
+    ? 'https://wa.me/'+WPP+'?text='+encodeURIComponent(msg)
+    : 'https://wa.me/?text='+encodeURIComponent(msg);
+}
+
+/* =========================================================
+   MODO CATALOGO
+   O mesmo arquivo atende os dois casos: com ?v= abre a ficha
+   de um carro, sem ?v= lista a linha inteira. Um upload so.
+   ========================================================= */
+let LISTA=[], filtroTec='';
+
+async function carregarCatalogo(){
+  const u=`${SUPA_URL}/rest/v1/bp_veiculos?select=${CAMPOS}&ativo=is.true&order=preco.asc`;
+  let r;
+  try{
+    r=await fetch(u,{headers:H(/^eyJ/.test(SUPA_KEY))});
+    if(r.status===401||r.status===403) r=await fetch(u,{headers:H(!/^eyJ/.test(SUPA_KEY))});
+  }catch(e){ falhar('Não deu para carregar. Confira sua conexão e tente de novo.'); return; }
+  if(!r.ok){ falhar('Não deu para carregar o catálogo agora (erro '+r.status+').'); return; }
+  try{ LISTA=await r.json(); }catch(e){ LISTA=[]; }
+  if(!LISTA.length){ falhar('Nenhum veículo disponível no momento.'); return; }
+
+  document.getElementById('load').style.display='none';
+  document.getElementById('cat').style.display='';
+  document.title='BYD Parvi Olinda · Nossa linha';
+
+  const nome=VEND||'a loja';
+  document.getElementById('cat-nome').textContent=nome;
+  const msg=`Oi${VEND?' '+VEND:''}! Vi a linha BYD no site e queria saber mais.`;
+  document.getElementById('cat-cta').href = WPP
+    ? 'https://wa.me/'+WPP+'?text='+encodeURIComponent(msg)
+    : 'https://wa.me/?text='+encodeURIComponent(msg);
+
+  renderFiltros();
+  renderCatalogo();
+}
+
+function renderFiltros(){
+  const tem=t=>LISTA.some(x=>x.tecnologia===t);
+  const fs=[{k:'',n:'Todos'}];
+  if(tem('BEV'))  fs.push({k:'BEV', n:'100% elétrico'});
+  if(tem('PHEV')) fs.push({k:'PHEV',n:'Híbrido plug-in'});
+  document.getElementById('cat-filtros').innerHTML = fs.length>1
+    ? fs.map(f=>`<button class="cat-f${f.k===filtroTec?' on':''}" onclick="filtrar('${f.k}')">${f.n}</button>`).join('')
+    : '';
+}
+function filtrar(k){ filtroTec=k; renderFiltros(); renderCatalogo(); }
+
+function renderCatalogo(){
+  const l=LISTA.filter(x=>!filtroTec || x.tecnologia===filtroTec);
+  document.getElementById('cat-grid').innerHTML=l.map(x=>{
+    const ref=x.slug||x.id;
+    return `<button class="cat-card" onclick="verFicha('${esc(String(ref))}')">
+      ${x.foto?`<img src="${esc(x.foto)}" alt="${esc(nomeV(x))}" loading="lazy">`:'<div class="vaz">⚡</div>'}
+      <div class="cat-b">
+        <h3>${esc(nomeV(x))}</h3>
+        <div class="pr">${x.preco?brl(x.preco):'consulte'}</div>
+        <div class="tg">
+          <span class="${x.tecnologia==='BEV'?'el':'hi'}">${x.tecnologia==='BEV'?'100% elétrico':'Híbrido plug-in'}</span>
+          ${x.segmento?`<span>${esc(x.segmento)}</span>`:''}
+          ${x.autonomia_km?`<span>${x.autonomia_km} km</span>`:''}
+          ${x.estoque>0?'<span>pronta entrega</span>':''}
+        </div>
+        <div class="vm">Ver ficha completa →</div>
+      </div>
+    </button>`;
+  }).join('');
+}
+
+function paramsBase(){
+  const p=[]; if(WPP) p.push('w='+WPP); if(VEND) p.push('n='+encodeURIComponent(VEND));
+  return p.length?('&'+p.join('&')):'';
+}
+function verFicha(ref){ location.search='?v='+encodeURIComponent(ref)+paramsBase(); }
+function verCatalogo(){ location.search='?'+paramsBase().replace(/^&/,''); }
+
+function calc(){
+  const km=Math.max(0, Number(document.getElementById('km').value)||0);
+  const kwh=Number(V.consumo_kwh100)||KWH100_PADRAO;
+  const ele=km*(kwh/100)*TARIFA;
+  const gas=(km/CONS_GASOLINA)*GASOLINA;
+  const eco=Math.max(0, gas-ele);
+  document.getElementById('eco').textContent=brl2(eco);
+  document.getElementById('base').textContent=
+    `Recarga ${brl2(ele)} contra ${brl2(gas)} de gasolina. Base: R$ ${TARIFA.toFixed(2)}/kWh, gasolina a R$ ${GASOLINA.toFixed(2)} e carro fazendo ${CONS_GASOLINA} km/l.`;
+}
+
+carregar();
+</script>
+</body>
+</html>
